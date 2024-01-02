@@ -28,33 +28,39 @@ router.post('/auth', (req, res) => {
 
 /*profile*/
 router.get('/profile', (req, res) => {
-    const data = {
-        title: 'プロフィール'
+    let user = {
+        id: 1,
+        name: '横浜 太郎',
+        birthplace: '横浜',
+        hobby: ['旅行', 'グルメ', 'スポーツ']
     }
+    let data = {};
+    data.title = 'プロフィール';
+    data.user = user;
     res.render('profile/index.ejs', data);
 });
 
 /* 商品id検索：パスパラメータを受け取り、idにて商品データを表示する */
 router.get('/item/:id', (req, res) => {
     const id = req.params.id;
+    const items = item.get();
     /* 商品検索 */
-    const selectItem = item.find(id);
-    let message = '商品が見つかりませんでした';
-    if (selectItem) {
-        message = selectItem.name;
-    }
-    res.send(message);
+    let data = {};
+    data.item = items.find((item) => {
+        return item.id == id
+    });
+    data.title = '商品情報';
+    res.render('item/detail.ejs', data);
+
 });
 
 /* 全商品 */
 router.get('/item', (req, res) => {
-    const values = item.get();
-
-    let newVlalues = '<h2>商品一覧</h2>';
-    values.forEach((value) => {
-        newVlalues += `<p>${value.name}</p>`;
-    });
-    res.send(newVlalues);
+    let data = {
+        title: '商品一覧',
+        items: item.get(),
+    }
+    res.render('item/index.ejs', data);
 
 
 });

@@ -15,33 +15,22 @@
 <body>
 
     <div class="container">
-        <div>
-            <a href="/">トップページ</a>
-        </div>
-        <h1 class="h1">
+        <h3 class="h3">
             <%= title %>
-        </h1>
-        <div>
-            <dl>
-                <dt>名前</dt>
+        </h3>
+        <dl>
+            <% items.forEach ((item)=> { %>
                 <dd>
-                    <%= user.name %>
+                    <a href="/item/<%= item.id %>">
+                        <%= item.name %>
+                    </a>
                 </dd>
-                <dt>出身地</dt>
                 <dd>
-                    <%= user.birthplace %>
+                    <%= item.price %>円
                 </dd>
-                <dt>趣味</dt>
-                <% user.hobby.forEach((value)=> { %>
-
-                    <dd>
-                        <%=value %>
-                    </dd>
-                    <% } ); %>
-            </dl>
-        </div>
+                <% }) %>
+        </dl>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
