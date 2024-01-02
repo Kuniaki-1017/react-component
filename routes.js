@@ -10,7 +10,8 @@ const { log } = require('console');
 //API
 /*ホーム*/
 router.get('/', (req, res) => {
-    res.send('ホーム');
+    /* ejsをレンダリング */
+    res.render('index.ejs');
 });
 
 /*postメッソドにて簡単なログイン認証*/
@@ -27,7 +28,10 @@ router.post('/auth', (req, res) => {
 
 /*profile*/
 router.get('/profile', (req, res) => {
-    res.send('プロフィール');
+    const data = {
+        title: 'プロフィール'
+    }
+    res.render('profile/index.ejs', data);
 });
 
 /* 商品id検索：パスパラメータを受け取り、idにて商品データを表示する */

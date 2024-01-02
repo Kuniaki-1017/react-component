@@ -10,6 +10,10 @@ dotenv.config();
 const host = process.env.HOST;
 const port = process.env.PORT;
 
+//set
+/* テンプレートエンジンをejsに設定 */
+app.set('view engine', 'ejs');
+
 //app.use:ミドルウェアの設定
 /*リクエストに対して事前に処理を実行できる*/
 /*staticメソッドにて静的ファイルにアクセスできるようにする*/
