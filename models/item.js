@@ -1,25 +1,12 @@
-//irem.jsonからitemデータを取得するモジュール
+/* Modelクラス読込 */
+const Model = require('./Model');
 
-/* :fsファイルを読み込むモジュール */
-const fs = require('fs');
+/* Modelクラス継承 */
 
-/* JSONファイルパスをdataFIleでエクスポート */
-exports.dataFile = "./data/items.json";
-
-/* 全てのitemデータ読込 */
-exports.get = () => {
-    /* JSONファイルをfs.readFileSyncで同期的にファイルを読込 */
-    const values = JSON.parse(fs.readFileSync(this.dataFile, 'utf8'));
-    return values;
-
+class Item extends Model {
+    /* JSONデータのパス */
+    dataFile = './data/items.json';
 }
 
-/* idにてitemデータ検索 */
-exports.find = (id) => {
-    const values = this.get();
-    /* findにて渡されたidと一致するオブジェクトを返す※getにてjsonデータparse済 */
-    return values.find((value) => {
-        return value.id === Number(id);
-    });
-}
+module.exports = Item;
 

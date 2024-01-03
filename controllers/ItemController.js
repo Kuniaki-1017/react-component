@@ -1,8 +1,10 @@
 //irem.jsonからitemデータを取得するモジュール読込
-const item = require('../models/item');
+const Item = require('../models/item');
 
 /* 全商品 */
 exports.index = (req, res) => {
+    /* itemインスタンス作成 */
+    const item = new Item();
     let data = {
         title: '商品一覧',
         items: item.get(),
@@ -13,6 +15,8 @@ exports.index = (req, res) => {
 
 /* 商品id検索：パスパラメータを受け取り、idにて商品データを表示する */
 exports.show = (req, res) => {
+    /* itemインスタンス作成 */
+    const item = new Item();
     /* パスパラメーターのidを取得 */
     const id = req.params.id;
     const items = item.get();
