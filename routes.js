@@ -9,6 +9,7 @@ const item = require('./models/item');
 const HomeController = require('./controllers/HomeController');
 const ItemController = require('./controllers/ItemController');
 const LoginController = require('./controllers/LoginController');
+const UserController = require('./controllers/UserController');
 
 
 
@@ -31,6 +32,11 @@ router.get('/login', LoginController.index);
 /*postメッソドにて簡単なログイン認証*/
 router.post('/auth', LoginController.auth);
 
+/* ユーザページ */
+router.get('/user', UserController.index);
+
+/* ログアウト処理 */
+router.get('/user/logout', UserController.logout);
 
 
 

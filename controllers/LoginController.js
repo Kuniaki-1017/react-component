@@ -14,17 +14,19 @@ exports.index = (req, res) => {
     res.render('login/index.ejs', data);
 };
 
-/*postメッソドにて簡単なログイン認証*/
+/*簡単なログイン認証*/
 exports.auth = (req, res) => {
-    const email = req.params.email;
-    const password = req.params.password;
+    const email = req.body.email;
+    const password = req.body.password;
     /* 認証処理 */
     /* Userインスタンス作成 */
     const user = new User();
     const authUser = user.auth(email, password);
 
     if (authUser) {
-        /* 認証成功したらユーザーほむにリダイレクト */
+        /* ユーザ情報のオブジェクトをセッションのauthUserに登録 */
+        req.session.authUser = authUser;
+        /* 認証成功したらユーザホームにリダイレクト */
         res.redirect('/user');
     } else {
         /* 認証失敗したらログインページにリリダイレクト */

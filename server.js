@@ -7,6 +7,8 @@ const layouts = require('express-ejs-layouts');
 /*外部ファイル:.envの読込 */
 const dotenv = require('dotenv');
 dotenv.config();
+/* セッションモジュールの読込 */
+const session = require('express-session');
 
 /*.envから変数を読み込み*/
 const host = process.env.HOST;
@@ -28,6 +30,12 @@ app.use(layouts);
 app.use(express.static(__dirname + '/public'));
 /*urlendodedにてPOSTデータのマルチバイトの文字化け防止 */
 app.use(express.urlencoded({ extend: true }));
+/* セッション登録 ※注意：ルーティング処理の前に記述*/
+app.use(session({
+    secret: 'secret_key',/* クッキーの署名（秘密鍵みたいなもの）：secretの値は通常ランダムで予測が難しい値にする */
+    resave: false,
+    saveUninitialized: false
+}));
 /*routerの設定 */
 app.use(router);
 
