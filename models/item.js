@@ -1,3 +1,5 @@
+//irem.jsonからitemデータを取得するモジュール
+
 /* :fsファイルを読み込むモジュール */
 const fs = require('fs');
 
