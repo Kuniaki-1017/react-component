@@ -10,6 +10,7 @@ dotenv.config();
 /* セッションモジュールの読込 */
 const session = require('express-session');
 
+
 /*.envから変数を読み込み*/
 const host = process.env.HOST;
 const port = process.env.PORT;

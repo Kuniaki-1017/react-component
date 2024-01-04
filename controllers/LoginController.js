@@ -15,13 +15,15 @@ exports.index = (req, res) => {
 };
 
 /*簡単なログイン認証*/
-exports.auth = (req, res) => {
+exports.auth = async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     /* 認証処理 */
     /* Userインスタンス作成 */
     const user = new User();
-    const authUser = user.auth(email, password);
+    /* user.authは通信を行うため非同期で行う */
+    const authUser = await user.auth(email, password);
+    console.log('認証処理2:', authUser)
 
     if (authUser) {
         /* ユーザ情報のオブジェクトをセッションのauthUserに登録 */
@@ -29,7 +31,7 @@ exports.auth = (req, res) => {
         /* 認証成功したらユーザホームにリダイレクト */
         res.redirect('/user');
     } else {
-        /* 認証失敗したらログインページにリリダイレクト */
+        /* 認証失敗したらログインページにリダイレクト */
         res.redirect('./login');
     };
 };

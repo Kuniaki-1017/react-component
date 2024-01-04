@@ -10,7 +10,7 @@ const con = mysql.createConnection(db.info);
 /* db接続後の処理を.connectで実行 */
 con.connect((err) => {
     if (err) {
-        console.log('DBエラー:', err);
+        console.log('DB接続エラー:', err);
     } else {
         console.log('データベース接続');
     }

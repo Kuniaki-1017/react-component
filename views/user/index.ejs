@@ -2,7 +2,7 @@
     <div>
         <div class="text-end">
             <span class="me-3">
-                Welcome, <%= user.name %>
+                Welcome, <%= user %>
             </span>
 
             <a class="btn btn-sm btn-outline-primary" href="/user/logout">ログアウト</a>
@@ -13,17 +13,8 @@
     <dl>
         <dt>名前</dt>
         <dd>
-            <%= user.name %>
+            <%= user %>
         </dd>
-        <dt>出身地</dt>
-        <dd>
-            <%= user.birthplace %>
-        </dd>
-        <dt>趣味</dt>
-        <dd>
-            <% user.hobby.forEach((hobby)=> { %>
-                <%= hobby %>
-                    <% }) %>
-        </dd>
+
     </dl>
 </div>
