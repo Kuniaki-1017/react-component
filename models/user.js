@@ -32,7 +32,7 @@ class User {
             con.end();
         }
         if (user.id && bcrypt.compareSync(password, user.password)) {
-            console.log('認証:', user)
+            console.log('認証処理1:', user)
             return user;
         }
         return;
