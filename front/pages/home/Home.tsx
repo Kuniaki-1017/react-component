@@ -1,13 +1,17 @@
+import './Home.css';
+import Topbar from '../../components/topbar/Topbar';
+import Sidebar from '../../components/sidebar/Sidebar';
+import Timeline from '../../components/timeline/Timeline';
 
 
 const Home = () => {
     return (
-        <div id="HOME">
-            <div className="homeConteiner">
-                HOME
-            </div>
-        </div>
-    )
+        <>
+            <Topbar />
+            <Sidebar />
+            <Timeline />
+        </>)
+
 }
 
 export default Home;
