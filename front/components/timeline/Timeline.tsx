@@ -3,8 +3,8 @@ import './Timeline.css';
 
 const Timeline = () => {
   return (
-    <div className='timelineConteiner'>
-
+    <div className='timeline'>
+      timelineConteiner
     </div>
 
 

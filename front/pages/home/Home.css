@@ -1,1 +1,5 @@
-#Home {}
+.homeConteiner {
+    width: 100%;
+    background: #f8fcff;
+    display: flex;
+}
