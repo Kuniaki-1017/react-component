@@ -1,0 +1,50 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+
+    font-size: 62.5%;
+
+}
+
+body {
+    color: #222;
+    line-height: 1.8;
+    font-family: "Noto Sans JP", "Hiragino Sans", "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN", "游ゴシック", YuGothic, "メイリオ", Meiryo, sans-serif;
+    position: relative;
+    word-break: break-word;
+    width: 100%;
+    font-weight: 400;
+    font-size: 1.6rem;
+}
+
+
+
+/*  フォーム関連リセット */
+
+
+/* 数値増減ボタンをChromeで削除 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* 数値増減ボタンをfirefoxで削除 */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* submitのデフォルトスタイルをChromeで削除 */
+input[type=submit] {
+    -webkit-appearance: none;
+}
+
+textarea {
+    resize: none;
+    width: auto;
+    height: auto;
+}
