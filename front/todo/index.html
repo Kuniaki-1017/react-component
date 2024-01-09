@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="stylesheet" href="/front/src/assets/todo.css">
+  <link rel="stylesheet" href="./todo.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Component App</title>
 </head>
@@ -49,6 +49,43 @@
     const btnEl = document.getElementById('btn');
     const list = document.getElementById('list');
     const input = document.getElementById('new-todo');
+    /* 画面ロード時にtodoの値を取得：JSONデータで保存されてるためparseでオブジェクトにする*/
+    const todos = JSON.parse(localStorage.getItem('todos'));
+    if (todos) {
+      todos.forEach((todo) => {
+        const liEl = document.createElement('li');
+        liEl.setAttribute('class', 'totoList');
+        liEl.innerText = todo;
+
+
+        /* donebtnを作成*/
+        const doneBtn = add('button', 'done');
+        doneBtn.setAttribute('class', 'done-btn');
+        /* thisにてクリックされた要素（イベントした要素）を指定するためfunction使用*/
+        doneBtn.addEventListener('click', function () {
+          this.closest('li').classList.toggle('done');
+        });
+        /*doneBtnをliの子要素に挿入*/
+        liEl.appendChild(doneBtn);
+
+        /* removeBtnを作成*/
+        const removeBtn = add('button', 'remove');
+        removeBtn.setAttribute('class', 'remove-btn');
+        /*removeBtnBtnをliの子要素に挿入*/
+        liEl.appendChild(removeBtn);
+        /*作成したliにinputに入力された値を入れ、ulの子要素の一番最後に要素を追加*/
+        list.appendChild(liEl);
+        /* thisにてクリックされた要素（イベントした要素）を指定するためfunction使用*/
+        removeBtn.addEventListener('click', function () {
+          this.closest('li').remove();
+          /*ローカルストレージの値を更新して現在描画されている分のlistデータを上書き*/
+          saveData();
+        });
+
+      });
+    }
+
+
 
     /* 任意の要素の作成＋テキスト挿入*/
     function add(el, val = '') {
@@ -59,12 +96,34 @@
       return newEl;
     }
 
+    /* 現在DOMに存在するli（.totolist）を全て取得、全て保存+更新 */
+    function saveData() {
+      /*現在DOMに存在するli（.totolist）を全て取得=全て保存*/
+      const lists = document.querySelectorAll('.totoList');
+      let newList = [];
+      lists.forEach((list) => {
+        /*splitで改行で区切って新しい配列 */
+        const newText = list.innerText.split('\n');
+        /*新しい配列の一番最初の要素を抽出*/
+        const firstText = newText.shift();
+        /*配列に抽出した要素を入れる*/
+        newList.push(firstText);
+
+        /*ローカルストレージにJSON形式で保存：第一引数にキー、第二に値。*/
+        localStorage.setItem('todos', JSON.stringify(newList));
+
+      });
+
+    }
+
     /* addに対してイベント登録*/
     btnEl.addEventListener('click', () => {
       /*input要素の中に値が合った場合のみLi要素を作成、追加*/
       if (input.value) {
         /* liを作成*/
         const li = add('li', input.value);
+        li.setAttribute('class', 'totoList');
+
 
         /* donebtnを作成*/
         const doneBtn = add('button', 'done');
@@ -72,29 +131,28 @@
         /*doneBtnをliの子要素に挿入*/
         li.appendChild(doneBtn);
 
-        /* donebtnを作成*/
+        /* removeBtnを作成*/
         const removeBtn = add('button', 'remove');
         removeBtn.setAttribute('class', 'remove-btn');
-        /*doneBtnをliの子要素に挿入*/
+        /*removeBtnBtnをliの子要素に挿入*/
         li.appendChild(removeBtn);
-
-
-
+        /*作成したliにinputに入力された値を入れ、ulの子要素の一番最後に要素を追加*/
+        list.appendChild(li);
         /* thisにてクリックされた要素（イベントした要素）を指定するためfunction使用*/
         doneBtn.addEventListener('click', function () {
           this.closest('li').classList.toggle('done');
         });
+
+
+        saveData();
+
+
         /* thisにてクリックされた要素（イベントした要素）を指定するためfunction使用*/
         removeBtn.addEventListener('click', function () {
           /* removeボタンの親要素のliをremove()で削除*/
           this.closest('li').remove();
+          saveData();
         });
-
-
-
-
-        /*作成したliにinputに入力された値を入れ、ulの子要素の一番最後に要素を追加*/
-        list.appendChild(li);
         /*inputの値を初期化*/
         input.value = "";
       }

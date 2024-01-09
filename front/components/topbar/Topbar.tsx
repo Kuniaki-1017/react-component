@@ -1,4 +1,4 @@
-import React from 'react';
+
 import './Topbar.css';
 import SearchIcon from '@mui/icons-material/Search';
 import ChatIcon from '@mui/icons-material/Chat';
