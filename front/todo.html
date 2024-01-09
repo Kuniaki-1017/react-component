@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="/front/src/assets/todo.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Component App</title>
+</head>
+
+<body>
+  <!-- Todo1 -->
+  <!-- <div class="todo todo1">
+    <h2>TODOリスト1</h2>
+    <ul>
+      <li>Todo1<button>done</button></li>
+      <li>Todo2<button>done</button></li>
+      <li>Todo3<button>done</button></li>
+    </ul>
+  </div> -->
+
+  <!-- Todo2 -->
+  <div class="todo2 todo">
+    <h2>TODOリスト1</h2>
+    <input id="new-todo" type="text"><button id="btn" class="add-btn">add</button>
+    <ul id="list">
+
+    </ul>
+  </div>
+
+  <script>
+    //Todo1
+    /*全てのボタンを取得*/
+    // const btns = document.querySelectorAll('.todo button');
+
+    // /*全てのボタンに処理を行なうためforEachにて処理*/
+    // /*btnsのhtmlコレクションをスプレッド構文にて配列化*/
+    // [...btns].forEach((btn) => {
+    //   /*btn要素全てにイベント登録*/
+    //   btn.addEventListener('click', (e) => {
+    //     /*登録したbtn要素の親要素に対してdoneクラスの付け替えを行なう*/
+    //     /*parentElementでも実装できるが（直近の親要素を取得する*/
+    //     btn.closest('li').classList.toggle('done');
+    //   });
+    // });
+
+    //Todo2
+    /*クリック対象addの用を取得*/
+    const btnEl = document.getElementById('btn');
+    const list = document.getElementById('list');
+    const input = document.getElementById('new-todo');
+
+    /* 任意の要素の作成＋テキスト挿入*/
+    function add(el, val = '') {
+      /*要素を作成し変数に格納*/
+      const newEl = document.createElement(el);
+      /*要素にテキスト挿入*/
+      newEl.innerText = val;
+      return newEl;
+    }
+
+    /* addに対してイベント登録*/
+    btnEl.addEventListener('click', () => {
+      /*input要素の中に値が合った場合のみLi要素を作成、追加*/
+      if (input.value) {
+        /* liを作成*/
+        const li = add('li', input.value);
+
+        /* donebtnを作成*/
+        const doneBtn = add('button', 'done');
+        doneBtn.setAttribute('class', 'done-btn');
+        /*doneBtnをliの子要素に挿入*/
+        li.appendChild(doneBtn);
+
+        /* donebtnを作成*/
+        const removeBtn = add('button', 'remove');
+        removeBtn.setAttribute('class', 'remove-btn');
+        /*doneBtnをliの子要素に挿入*/
+        li.appendChild(removeBtn);
+
+
+
+        /* thisにてクリックされた要素（イベントした要素）を指定するためfunction使用*/
+        doneBtn.addEventListener('click', function () {
+          this.closest('li').classList.toggle('done');
+        });
+        /* thisにてクリックされた要素（イベントした要素）を指定するためfunction使用*/
+        removeBtn.addEventListener('click', function () {
+          /* removeボタンの親要素のliをremove()で削除*/
+          this.closest('li').remove();
+        });
+
+
+
+
+        /*作成したliにinputに入力された値を入れ、ulの子要素の一番最後に要素を追加*/
+        list.appendChild(li);
+        /*inputの値を初期化*/
+        input.value = "";
+      }
+    });
+
+
+
+
+  </script>
+
+</body>
+
+</html>

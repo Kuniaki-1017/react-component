@@ -4,9 +4,13 @@
     margin: 50px auto 0;
     padding: 30px;
     border: 1px solid #333;
+    border-radius: 5px;
 }
 
 .todo ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
     margin-top: 30px;
     display: flex;
     flex-direction: column;
@@ -20,9 +24,25 @@
     align-items: center;
 }
 
+.todo input {
+    padding: 5px 10px;
+    margin: 0;
+    border: 1px solid #333;
+    border-radius: 5px;
+    font-size: 16px;
+}
 
-.todo li button {
-    margin-left: 25px;
+.done {
+    text-decoration: line-through;
+}
+
+
+.add-btn,
+.done-btn,
+.remove-btn {
+    font-size: 16px;
+    border: none;
+    margin-left: 15px;
     background-color: #3fb4f3;
     padding: 5px 10px;
     border-radius: 5px;
@@ -31,6 +51,10 @@
     box-shadow: 0 2px 2px 0px #135b82;
     transition: .3s;
     cursor: pointer;
+}
+
+.remove-btn {
+    background: red;
 }
 
 .todo li button:hover {
