@@ -1,0 +1,39 @@
+.todo {
+    width: 100%;
+    max-width: 500px;
+    margin: 50px auto 0;
+    padding: 30px;
+    border: 1px solid #333;
+}
+
+.todo ul {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 5px;
+}
+
+
+.todo li {
+    display: flex;
+    align-items: center;
+}
+
+
+.todo li button {
+    margin-left: 25px;
+    background-color: #3fb4f3;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+    letter-spacing: 0.1em;
+    box-shadow: 0 2px 2px 0px #135b82;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.todo li button:hover {
+    transform: translateY(5px);
+    box-shadow: none;
+}
