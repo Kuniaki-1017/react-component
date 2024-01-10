@@ -1,0 +1,40 @@
+@charset "utf-8";
+
+.conteiner {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+
+}
+
+.timer {
+    font-size: 3rem;
+    text-align: center;
+}
+
+.typing-aria {
+    width: 100%;
+}
+
+.typing-q {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-top: 30px;
+    border-bottom: 3px solid #f13e74;
+}
+
+.typing-input {
+    width: 100%;
+
+    margin: 50px auto 0;
+    display: block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 10px;
+    outline: none;
+    background: transparent;
+    font-size: 2.5rem;
+    border: none;
+    border-bottom: 3px solid #3eadf1;
+}
