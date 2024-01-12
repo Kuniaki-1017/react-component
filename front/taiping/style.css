@@ -38,3 +38,7 @@
     border: none;
     border-bottom: 3px solid #3eadf1;
 }
+
+.correct {
+    color: #f13e74;
+}

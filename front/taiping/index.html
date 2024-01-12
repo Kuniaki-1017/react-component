@@ -12,16 +12,77 @@
     <div class="conteiner">
         <div id="timer" class="timer" id="" timer>0</div><!-- /.timer -->
         <div class="typing-aria">
-            <div id="typing-q" class="typing-q">問題</div><!-- /.typing-q -->
+            <div id="typing-q" class="typing-q"></div><!-- /.typing-q -->
             <input type="text" class="typing-input" id="typing-input" autofocus>
         </div><!-- /.typingaria -->
     </div><!-- /.conteiner -->
 
 
     <script>
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        // タイピングゲーム
+
+        const quession = document.getElementById('typing-q');
+        const inputText = document.getElementById('typing-input');
 
         /* APIのURL */
         const URL = "https://api.quotable.io/random";
+
+
+        /**ランダムなテキストを取得*/
+        async function getData() {
+            try {
+                const rondomData = await fetch(URL);
+                if (rondomData.status === 200) {
+                    const data = await rondomData.json();
+                    return data.content;
+
+                } else {
+                    throw new Error('fetch失敗');
+                }
+
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        /**ランダムなテキストを表示*/
+        async function RondomText() {
+            const textData = await getData();
+            // 文章を一文字ずつ分解、spanタグで囲む
+            /* splitで文字列を分解、一つ一つ配列にしてspanTextに格納*/
+            const spanText = textData.split('');
+            /*配列化したspanTextを繰替処理*/
+            spanText.forEach((text) => {
+                /* spanタグを生成 */
+                const spanTag = document.createElement('span');
+                /*生成したspanタグに配列に分解したテキストを一文字ずつ入れる*/
+                spanTag.textContent = text;
+                spanTag.setAttribute('class', 'correct');
+                /*<span>テキスト一文字</span>を問題を表示するタグの子要素に一つずつ追加　*/
+                /* 全てのテキストがspanタグに囲われた状態で画面に描画される*/
+                quession.appendChild(spanTag);
+            });
+        }
+        RondomText();
+
+        /**取得したテキストと入力したテキストの比較*/
+        /* inputしたテキストが入力されるたびに発火するイベント*/
+        inputText.addEventListener('input', (e) => {
+            /* 画面に表示されている quessiontextを取得し変数に格納。Allのため配列で格納される*/
+            const quessionArray = document.querySelectorAll('span');
+            /* inkputに入力された文字を取得して変数に格納※入力されるたびに取得するためinput */
+            /* タグの中身ではないためvalueではなくdataでとる。eはイベントオブジェクト*/
+            let answerText = e.data;
+            console.log(answerText)
+
+        });
+
+
+        /* 比較の結果あっていればマーカーかテキストの色を変更する */
+
+        /* 全てのテキストが一致したら次のテキストを表示する */
+
+        /* */
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 非同期まとめ
@@ -42,19 +103,19 @@
         //////////////////////////////////////////////////////////////////////////////////////////////////
 
         //非同期練習1：promis//////////////////////////////////////////////////////////////////////////////
-        function promise() {
-            return new Promise((resolve, reject) => {
-                console.log('promise関数1')
-                //resolveが実行されpromiseが成功の状態になり.thenに登録されたコールバックがマルチタスクキューに入る
-                //マルチタスクキューはメインスレッドが終わるまで実行されない
-                resolve('hello');
-                console.log('promise関数2')
-            });
+        // function promise() {
+        //     return new Promise((resolve, reject) => {
+        //         console.log('promise関数1')
+        //         //resolveが実行されpromiseが成功の状態になり.thenに登録されたコールバックがマルチタスクキューに入る
+        //         //マルチタスクキューはメインスレッドが終わるまで実行されない
+        //         resolve('hello');
+        //         console.log('promise関数2')
+        //     });
 
-        }
-        promise().then((res) => console.log(res));
-        //上記.thenのコールバックはマルチタスクキューに入っているため下記のlogが先に表示される
-        console.log('promise関数の後')
+        // }
+        // promise().then((res) => console.log(res));
+        // //上記.thenのコールバックはマルチタスクキューに入っているため下記のlogが先に表示される
+        // console.log('promise関数の後')
 
 
         //非同期練習1：async + promises//////////////////////////////////////////////////////////////////////////////
@@ -63,31 +124,31 @@
         //非同期処理にawaitつけ,次の処理が走らないようにする
         //次の処理（例えばawait data.json();の部分）にデータを引き継ぐためawaitの結果は変数に格納
         //処理の最後にreturnでnewDataを返し、プロミスオブジェクトを返す
-        const getData = async () => {
-            const data = await fetch(URL);
-            const newData = await data.json();
-            console.log(newData.content)
-            return newData;
+        // const getData = async () => {
+        //     const data = await fetch(URL);
+        //     const newData = await data.json();
+        //     console.log(newData.content)
+        //     return newData;
 
-        }
-
-
-
-        new Promise((resolve, reject) => {
-            async function test() {
-                const data = await getData();
-                resolve(data);
-            }
-            test();
-        })
-            .then((res) => {
-                console.log('2回目', res.content)
-                console.log('promiseの中:promiseより後に記述した文章')
-            });
+        // }
 
 
 
-        console.log('promiseの外:promiseより後に記述した文章')
+        // new Promise((resolve, reject) => {
+        //     async function test() {
+        //         const data = await getData();
+        //         resolve(data);
+        //     }
+        //     test();
+        // })
+        //     .then((res) => {
+        //         console.log('2回目', res.content)
+        //         console.log('promiseの中:promiseより後に記述した文章')
+        //     });
+
+
+
+        // console.log('promiseの外:promiseより後に記述した文章')
 
 
         //非同期練習2：promises//////////////////////////////////////////////////////////////////////////////
