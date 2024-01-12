@@ -17,6 +17,119 @@
         </div><!-- /.typingaria -->
     </div><!-- /.conteiner -->
 
+
+    <script>
+
+        /* APIのURL */
+        const URL = "https://api.quotable.io/random";
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        // 非同期まとめ
+        //promise＝非同期ではない。promiseを使うと非同期の処理を任意の順序に制御できる
+        //promiseの中の処理は同期的に処理される。非同期処理の機能を持った関数等はpromiseに関係なくメインスレッドから外れる
+        //promiseを使うと.thenを使用できる※正しくはpromiseオブジェクトにthenを使用できる
+        //ただしresolve + thisを使用すると非同期的に処理が可能。なぜなら.thenのコールバックは全てマルチタスクキューに入るから
+        //通常はpromiseの中に非同期的な処理を記述し非同期的な処理の完了を待つ必要がある処理を.thenやawaitで対応する
+        //非同期処理がメインスレッドから外れ後続の処理が実行されるため
+        //非同期処理が完了したら実行したい処理をthenのコーバックに記述書いておく
+        //thenを実行するためにresoleveを非同期の処理の中に記述する
+        //fetchは内部的に処理結果をresoleveまたはrejevtを返すようになっているため明示的にresolve等を記述しないでok
+        //非同期処理が実行されresolveが実行されるとpromiseが成功の状態になり.thenのコールバックがマルチタスクキューに登録される
+        //.thenのコールバックはメインスレッドの処理が全て完了した時点で実行される。
+        //↑つまり、非同期の処理の結果を待ち、必要に応じて非同期処理結果を用いた処理が可能になる
+        //非同期の処理結果はresolve()の引数に渡すことで.thenに渡すことができる
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //非同期練習1：promis//////////////////////////////////////////////////////////////////////////////
+        function promise() {
+            return new Promise((resolve, reject) => {
+                console.log('promise関数1')
+                //resolveが実行されpromiseが成功の状態になり.thenに登録されたコールバックがマルチタスクキューに入る
+                //マルチタスクキューはメインスレッドが終わるまで実行されない
+                resolve('hello');
+                console.log('promise関数2')
+            });
+
+        }
+        promise().then((res) => console.log(res));
+        //上記.thenのコールバックはマルチタスクキューに入っているため下記のlogが先に表示される
+        console.log('promise関数の後')
+
+
+        //非同期練習1：async + promises//////////////////////////////////////////////////////////////////////////////
+
+        //asyncを使用するため関数を定義
+        //非同期処理にawaitつけ,次の処理が走らないようにする
+        //次の処理（例えばawait data.json();の部分）にデータを引き継ぐためawaitの結果は変数に格納
+        //処理の最後にreturnでnewDataを返し、プロミスオブジェクトを返す
+        const getData = async () => {
+            const data = await fetch(URL);
+            const newData = await data.json();
+            console.log(newData.content)
+            return newData;
+
+        }
+
+
+
+        new Promise((resolve, reject) => {
+            async function test() {
+                const data = await getData();
+                resolve(data);
+            }
+            test();
+        })
+            .then((res) => {
+                console.log('2回目', res.content)
+                console.log('promiseの中:promiseより後に記述した文章')
+            });
+
+
+
+        console.log('promiseの外:promiseより後に記述した文章')
+
+
+        //非同期練習2：promises//////////////////////////////////////////////////////////////////////////////
+        // お約束を取り付けたい処理にPromise
+        // new Promise((resolve, reject) => {
+        //     //1秒後に実行する処理
+        //     setTimeout(() => {
+        //         console.log("2番目(1秒後に実行)");
+        //         let num = 0;
+        //         //無事処理が終わったことを伝える
+        //         resolve(num);
+        //     }, 1000);
+
+        // })
+        //     .then((num) => {
+        //         // 処理が無事終わったことを受けとって実行される処理
+        //         let newNun = num + 1;
+        //         console.log("3番目", newNun);
+
+        //         return newNun;
+
+        //     })
+        //     .then((newNun) => {
+        //         // 処理が無事終わったことを受けとって実行される処理
+        //         if (newNun < 2) {
+        //             console.log(newNun);
+        //             throw new Error('エラー発生')
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.error(err);
+        //     }
+        //     )
+
+
+
+
+
+
+
+    </script>
+
 </body>
 
 </html>
