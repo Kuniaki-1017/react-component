@@ -19,17 +19,17 @@
 
 
     <script>
+
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // タイピングゲーム
-
+        /*使用する要素を事前に取得*/
         const quession = document.getElementById('typing-q');
         const inputText = document.getElementById('typing-input');
 
-        /* APIのURL */
+        ////APIのURL 
         const URL = "https://api.quotable.io/random";
 
-
-        /**ランダムなテキストを取得*/
+        ////ランダムなテキストを取得
         async function getData() {
             try {
                 const rondomData = await fetch(URL);
@@ -40,13 +40,15 @@
                 } else {
                     throw new Error('fetch失敗');
                 }
-
             } catch (err) {
                 console.error(err);
             }
         }
-        /**ランダムなテキストを表示*/
+
+        ////fetchで取得したランダムなテキストを画面に表示
+        /* getDataは非同期処理でpromiseオブジェクトのためasync、awaiteで制御 */
         async function RondomText() {
+
             const textData = await getData();
             // 文章を一文字ずつ分解、spanタグで囲む
             /* splitで文字列を分解、一つ一つ配列にしてspanTextに格納*/
@@ -57,7 +59,7 @@
                 const spanTag = document.createElement('span');
                 /*生成したspanタグに配列に分解したテキストを一文字ずつ入れる*/
                 spanTag.textContent = text;
-                spanTag.setAttribute('class', 'correct');
+
                 /*<span>テキスト一文字</span>を問題を表示するタグの子要素に一つずつ追加　*/
                 /* 全てのテキストがspanタグに囲われた状態で画面に描画される*/
                 quession.appendChild(spanTag);
@@ -65,17 +67,33 @@
         }
         RondomText();
 
-        /**取得したテキストと入力したテキストの比較*/
+        ////取得したテキストと入力したテキストの比較
         /* inputしたテキストが入力されるたびに発火するイベント*/
         inputText.addEventListener('input', (e) => {
             /* 画面に表示されている quessiontextを取得し変数に格納。Allのため配列で格納される*/
             const quessionArray = document.querySelectorAll('span');
-            /* inkputに入力された文字を取得して変数に格納※入力されるたびに取得するためinput */
-            /* タグの中身ではないためvalueではなくdataでとる。eはイベントオブジェクト*/
-            let answerText = e.data;
-            console.log(answerText)
+            /* inputにテキストが入力されるたびにinputに入力された文字を取得してsplitで文字を配列化 */
+            /*1文字のテキストsplit('')を使うことで1文字分の配列を作ることができる。それをanswerTextに入れている*/
+            /*10文字なら10文字分のテキストをそれぞれ1文字ずつ配列にして変数に格納。inputされるたびにconst定義するので新しい値が入る*/
+            const answerText = e.target.value.split("");
+            // 入力したテキストと問題のテキストの比較///////////////
+            /*quessionArray=問題の配列と answerText=入力したテキストを一文字ずつ比較*/
+            /*forEachの引数にquessionArrayの要素とindexを指定 */
+            quessionArray.forEach((quession, index) => {
+                // 前回のクラスをクリア
+                quession.classList.remove('correct', 'incorrect');
 
+                if (quession.textContent == answerText[index]) {
+                    quession.classList.add('correct');
+                } else if (answerText[index]) {
+                    // 入力があって、かつ間違えている場合のみ 'incorrect' クラスを追加
+                    quession.classList.add('incorrect');
+                }
+            });
         });
+
+
+
 
 
         /* 比較の結果あっていればマーカーかテキストの色を変更する */
@@ -86,6 +104,8 @@
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         // 非同期まとめ
+        //判断が難しい場合は、consol.logでconst textData = getData();このようにしてみてpromiseが帰ってきたら何も考えずasync　awaitまたはthenを使用すれば大体処理がうまくいく
+        //非同期処理の結果promiseオブジェクトを返す関数は呼び出すとき、値を参照する時もasync awaitまたはthenを使用する必要がある
         //promise＝非同期ではない。promiseを使うと非同期の処理を任意の順序に制御できる
         //promiseの中の処理は同期的に処理される。非同期処理の機能を持った関数等はpromiseに関係なくメインスレッドから外れる
         //promiseを使うと.thenを使用できる※正しくはpromiseオブジェクトにthenを使用できる

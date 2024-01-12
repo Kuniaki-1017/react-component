@@ -40,5 +40,9 @@
 }
 
 .correct {
+    color: #3eadf1;
+}
+
+.incorrect {
     color: #f13e74;
 }
