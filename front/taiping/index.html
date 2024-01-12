@@ -10,7 +10,7 @@
 
 <body>
     <div class="conteiner">
-        <div id="timer" class="timer" id="" timer>0</div><!-- /.timer -->
+        <div id="timer" class="timer" id="" timer>5</div><!-- /.timer -->
         <div class="typing-aria">
             <div id="typing-q" class="typing-q"></div><!-- /.typing-q -->
             <input type="text" class="typing-input" id="typing-input" autofocus>
@@ -25,6 +25,10 @@
         /*使用する要素を事前に取得*/
         const quession = document.getElementById('typing-q');
         const inputText = document.getElementById('typing-input');
+        const time = document.getElementById('timer');
+        /* サウンド設定 */
+        const typeSound1 = new Audio('../src/assets/audio/typing-sound.mp3');
+        const typeSound2 = new Audio('../src/assets/audio/wrong.mp3');
 
         ////APIのURL 
         const URL = "https://api.quotable.io/random";
@@ -45,9 +49,14 @@
             }
         }
 
-        ////fetchで取得したランダムなテキストを画面に表示
+
+
+        ////fetchで取得したランダムなテキストを画面に表示、そしてタイマーを発火
         /* getDataは非同期処理でpromiseオブジェクトのためasync、awaiteで制御 */
         async function RondomText() {
+            quession.innerText = '';
+            inputText.value = '';
+
 
             const textData = await getData();
             // 文章を一文字ずつ分解、spanタグで囲む
@@ -64,17 +73,53 @@
                 /* 全てのテキストがspanタグに囲われた状態で画面に描画される*/
                 quession.appendChild(spanTag);
             });
+            /* 制限時間のタイマーが発火*/
+            startTimer();
         }
         RondomText();
+
+
+
+        function startTimer() {
+            basisTime = new Date();
+            startTime = 30;
+            time.innerText = startTime;
+            const Id = setInterval(() => {
+                /* 事前に実行したnew Date()と一秒後に実行する（setTimeoutを使用しているため1000mm秒後）*/
+                /*new Date()を計算して一秒毎に時間を減らす※Math.floorで小数点切り下げ */
+                /* 簡単な方法で1ずつ引けば実装可能だが今回はfloorとnew Dateを使用したいのであえて複雑化 */
+                countTime = startTime - Math.floor((new Date() - basisTime) / 1000);
+                timer.textContent = countTime;
+                if (countTime == 0) {
+                    /* 非同期処理内でclearInterval(Id);を使うと二回目以降バグが発生するため事前にクリア*/
+                    clearInterval(Id);
+
+                    /* RondomText();は非同期処理で、promiseを返すため非同期処理用のasync awaitで実行*/
+                    /* ただし後続の処理を実行して良いのであればasync awaitは不要。一応念の為async使用しているが動作は現状変わらない */
+                    async function timeUp() {
+                        await RondomText();
+                    }
+                    timeUp();
+                }
+            }, 1000);
+        }
+
 
         ////取得したテキストと入力したテキストの比較
         /* inputしたテキストが入力されるたびに発火するイベント*/
         inputText.addEventListener('input', (e) => {
+            /* 入力時の音の設定*/
+            typeSound1.play();
+            typeSound1.currentTime = 0;
+
+
+
+
             /* 画面に表示されている quessiontextを取得し変数に格納。Allのため配列で格納される*/
             const quessionArray = document.querySelectorAll('span');
             /* inputにテキストが入力されるたびにinputに入力された文字を取得してsplitで文字を配列化 */
             /*1文字のテキストsplit('')を使うことで1文字分の配列を作ることができる。それをanswerTextに入れている*/
-            /*10文字なら10文字分のテキストをそれぞれ1文字ずつ配列にして変数に格納。inputされるたびにconst定義するので新しい値が入る*/
+            /*文字数分配列化：10文字なら10文字分のテキストをそれぞれ1文字ずつ配列にして変数に格納。inputされるたびにconst定義するので新しい値が入る*/
             const answerText = e.target.value.split("");
             // 入力したテキストと問題のテキストの比較///////////////
             /*quessionArray=問題の配列と answerText=入力したテキストを一文字ずつ比較*/
@@ -82,14 +127,31 @@
             quessionArray.forEach((quession, index) => {
                 // 前回のクラスをクリア
                 quession.classList.remove('correct', 'incorrect');
-
                 if (quession.textContent == answerText[index]) {
+
                     quession.classList.add('correct');
                 } else if (answerText[index]) {
                     // 入力があって、かつ間違えている場合のみ 'incorrect' クラスを追加
                     quession.classList.add('incorrect');
+                    typeSound2.play();
+                    typeSound2.currentTime = 0;
+
                 }
             });
+
+            // 全ての問題が正しく解答されたかどうかを判断
+            //Array.prototype.メソッド名.callでNodeList等を配列化してevery（配列メソッド）を使用できるようにする
+            //callの第一引数に配列化したいNodeList等を指定。第二引数に処理内容→evreyの処理の内容
+            //every→ Arrayの要素すべてが条件を満たしているかチェックArray.every(条件)※第二引数indexが入る（第一引数に渡した配列の分だけ回る＝比較）
+            //今回：quessionのテキストとanswerTextのテキストを比較して全てあってるか判定
+            //quessionArrayはspanで囲われてるのでquession.textContent使用
+            //answerTextはconst answerText = e.target.value.split("");でテキストのみなのでindexを指定
+            //一週目はquessionArrayの一番目とanswerTextの一番目（indexで指定）、2周目はそれぞれ2番目が入る
+            if (Array.prototype.every.call(quessionArray, (quession, index) => quession.textContent == answerText[index])) {
+                // すべての文字が正しい場合の処理
+                RondomText();
+            }
+
         });
 
 
