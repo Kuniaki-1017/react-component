@@ -10,11 +10,41 @@
 
 <body>
     <div class="conteiner">
-        <div id="timer" class="timer" id="" timer>5</div><!-- /.timer -->
-        <div class="typing-aria">
-            <div id="typing-q" class="typing-q"></div><!-- /.typing-q -->
-            <input type="text" class="typing-input" id="typing-input" autofocus>
-        </div><!-- /.typingaria -->
+        <h1 class="ttl">Typing</h1><!-- / -->
+        <div id="completion-wrap" class="completion-wrap hide">
+            <p class="completion-txt">お疲れ様でした!!</p>
+            <div class="result-point-wrap">
+                <p>合計得点：</p>
+                <p id="result-point" class="result-point"></p>
+            </div><!-- /.timer -->
+            <div id="result-questions-wrap" class="result-questions-wrap">
+                <p>正解数：</p>
+                <p id="result-questions" class="result-questions"></p>
+            </div>
+            <button class="btn" onclick="window.location.reload()">もう一度遊ぶ</button>
+
+        </div><!-- / -->
+        <div id="typing-wrap" class="typing-wrap">
+
+            <div class="point-wrap">
+                <p>得点：</p>
+                <p id="point" class="point"></p>
+            </div><!-- /.timer -->
+            <div id="time-wrap" class="time-wrap">
+                <p>制限時間：</p>
+                <p id="timer" class="timer"></p>
+            </div><!-- /.timer -->
+            <div id="questions-wrap" class="questions-wrap">
+                <p>残り：</p>
+                <p id="questions" class="questions"></p>
+            </div>
+            <div class="typing-aria">
+                <div id="typing-q-wrap" class="typing-q-wrap">
+                    <p id="typing-q" class="typing-q"></p>
+                </div><!-- /.typing-q -->
+                <input type="text" class="typing-input" id="typing-input" autofocus>
+            </div><!-- /.typingaria -->
+        </div><!-- /.typing-wrap -->
     </div><!-- /.conteiner -->
 
 
@@ -26,9 +56,31 @@
         const quession = document.getElementById('typing-q');
         const inputText = document.getElementById('typing-input');
         const time = document.getElementById('timer');
+        const pointEL = document.getElementById('point');
+        const timeWrapEL = document.getElementById('time-wrap');
+        const questionsEl = document.getElementById('questions');
+        const typingWrapEl = document.getElementById('typing-wrap');
+        const completionWrap = document.getElementById('completion-wrap');
+        let resultpointEl = document.getElementById('result-point');
+        let resultquestionsEl = document.getElementById('result-questions');
         /* サウンド設定 */
-        const typeSound1 = new Audio('../src/assets/audio/typing-sound.mp3');
-        const typeSound2 = new Audio('../src/assets/audio/wrong.mp3');
+        const typeSound1 = new Audio('./assets/audio/typing-sound.mp3');
+        const typeSound2 = new Audio('./assets/audio/wrong.mp3');
+        const typeSound3 = new Audio('./assets/audio/correct.mp3');
+
+
+        /*  ポイント計測用の変数*/
+        let point = 0;
+        pointEL.textContent = point;
+        /* 問題制限*/
+        let questions = 10;
+        questionsEl.textContent = questions;
+        /*  正解数用の変数*/
+        let correct = 0;
+
+
+
+
 
         ////APIのURL 
         const URL = "https://api.quotable.io/random";
@@ -54,8 +106,22 @@
         ////fetchで取得したランダムなテキストを画面に表示、そしてタイマーを発火
         /* getDataは非同期処理でpromiseオブジェクトのためasync、awaiteで制御 */
         async function RondomText() {
+            /*残り問題に1が挿入された時点で終了*/
+            if (questionsEl.textContent == 1) {
+                resultpointEl.textContent = pointEL.textContent;
+                resultquestionsEl.textContent = correct;
+                typingWrapEl.classList.add('hide');
+                completionWrap.classList.remove('hide');
+                clearInterval(Id);
+
+            }
+
+
+            console.log(questionsEl.textContent)
+
             quession.innerText = '';
             inputText.value = '';
+            timeWrapEL.classList.remove('countDown');
 
 
             const textData = await getData();
@@ -81,6 +147,7 @@
 
 
         function startTimer() {
+            time.classList.remove('countDown');
             basisTime = new Date();
             startTime = 30;
             time.innerText = startTime;
@@ -88,9 +155,13 @@
                 /* 事前に実行したnew Date()と一秒後に実行する（setTimeoutを使用しているため1000mm秒後）*/
                 /*new Date()を計算して一秒毎に時間を減らす※Math.floorで小数点切り下げ */
                 /* 簡単な方法で1ずつ引けば実装可能だが今回はfloorとnew Dateを使用したいのであえて複雑化 */
-                countTime = startTime - Math.floor((new Date() - basisTime) / 1000);
+                let countTime = startTime - Math.floor((new Date() - basisTime) / 1000);
                 timer.textContent = countTime;
+                if (countTime <= 3) {
+                    timeWrapEL.classList.add('countDown');
+                }
                 if (countTime == 0) {
+                    questionsEl.textContent = questionsEl.textContent - 1;
                     /* 非同期処理内でclearInterval(Id);を使うと二回目以降バグが発生するため事前にクリア*/
                     clearInterval(Id);
 
@@ -103,6 +174,7 @@
                 }
             }, 1000);
         }
+
 
 
         ////取得したテキストと入力したテキストの比較
@@ -139,6 +211,7 @@
                 }
             });
 
+
             // 全ての問題が正しく解答されたかどうかを判断
             //Array.prototype.メソッド名.callでNodeList等を配列化してevery（配列メソッド）を使用できるようにする
             //callの第一引数に配列化したいNodeList等を指定。第二引数に処理内容→evreyの処理の内容
@@ -148,6 +221,32 @@
             //answerTextはconst answerText = e.target.value.split("");でテキストのみなのでindexを指定
             //一週目はquessionArrayの一番目とanswerTextの一番目（indexで指定）、2周目はそれぞれ2番目が入る
             if (Array.prototype.every.call(quessionArray, (quession, index) => quession.textContent == answerText[index])) {
+                typeSound3.play();
+                typeSound3.currentTime = 0;
+                switch (true) {
+                    case timer.textContent > 10:
+                        point = point + 5;
+                        break;
+                    case timer.textContent > 15:
+                        point = point + 10;
+                        break;
+                    case timer.textContent > 20:
+                        point = point + 15;
+                        break;
+                    case timer.textContent > 25:
+                        point = point + 20;
+                        break;
+                    default:
+                        // いずれの条件も満たされない場合の処理
+                        point = point + 5;
+                        break;
+                }
+                questionsEl.textContent = questionsEl.textContent - 1;
+                point = point + 10;
+                pointEL.textContent = point;
+                correct = correct + 1;
+
+
                 // すべての文字が正しい場合の処理
                 RondomText();
             }

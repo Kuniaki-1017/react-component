@@ -1,10 +1,26 @@
 @charset "utf-8";
 
+*,
+*::after,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .conteiner {
+    padding: 40px 20px;
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
 
+}
+
+.ttl {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 0.15em;
 }
 
 .timer {
@@ -16,11 +32,19 @@
     width: 100%;
 }
 
-.typing-q {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-top: 30px;
+.typing-q-wrap {
+    width: 100%;
+    min-height: 200px;
+    display: inline-block;
+    margin-top: 15px;
     border-bottom: 3px solid #f13e74;
+    display: flex;
+    align-items: end;
+}
+
+.typing-q {
+    font-size: 2.5rem;
+
 }
 
 .typing-input {
@@ -39,10 +63,82 @@
     border-bottom: 3px solid #3eadf1;
 }
 
+.questions-wrap,
+.time-wrap,
+.point-wrap,
+.result-point-wrap,
+.result-questions-wrap {
+    font-size: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.point-wrap {
+    margin-top: 30px;
+}
+
+.questions-wrap>p:last-of-type::after,
+.result-questions-wrap>p:last-of-type::after {
+    display: inline-block;
+    content: "問";
+    margin-left: 5px;
+}
+
+.point-wrap>p:last-of-type::after,
+.result-point-wrap>p:last-of-type::after {
+    display: inline-block;
+    content: "点";
+    margin-left: 5px;
+}
+
+.countDown {
+    color: red;
+}
+
 .correct {
     color: #3eadf1;
 }
 
 .incorrect {
     color: #f13e74;
+}
+
+.hide {
+    display: none;
+}
+
+.completion-txt {
+    margin-top: 20px;
+    font-size: 2.4rem;
+    color: #3eadf1;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn {
+    cursor: pointer;
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    margin: 30px auto 0;
+    width: 200px;
+    text-decoration: none;
+    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f13e74;
+    color: #fff;
+    font-weight: bold;
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 3px 3px 1px #9c3056;
+    transition: .2s;
+}
+
+.btn:hover {
+    transform: translateY(5px);
+    box-shadow: none;
 }
