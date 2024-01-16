@@ -9,7 +9,7 @@ const Share = () => {
         <div className="share">
             <div className="shareWrapper">
                 <div className="shareTop">
-                    <figure className="shareImgBox"><img src="/public/img/person/1.jpeg" alt="" className="shareImg" /></figure>
+                    <figure className="shareImgBox"><img src="/src/assets/img/person/1.jpeg" alt="" className="shareImg" /></figure>
                     <input type="text" className="shareInput" placeholder='今何してるの' />
                 </div>
                 <hr className="shareHr" />

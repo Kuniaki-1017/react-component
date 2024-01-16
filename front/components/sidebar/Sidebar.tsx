@@ -46,15 +46,15 @@ const Sidebar = () => {
                 <hr className="sidebarHr" />
                 <ul className="sidebarFriendList">
                     <li className="sidebarFriend">
-                        <figure className="sidebarImgBox"><img className="sidebarImg" src="/public/img/person/2.jpeg" alt="" /></figure>
+                        <figure className="sidebarImgBox"><img className="sidebarImg" src="/src/assets/img/person/2.jpeg" alt="" /></figure>
                         <span className="sidebarFriendName">Shin Code</span>
                     </li>
                     <li className="sidebarFriend">
-                        <figure className="sidebarImgBox"><img className="sidebarImg" src="/public/img/person/3.jpeg" alt="" /></figure>
+                        <figure className="sidebarImgBox"><img className="sidebarImg" src="/src/assets/img/person/3.jpeg" alt="" /></figure>
                         <span className="sidebarFriendName">Tnaka</span>
                     </li>
                     <li className="sidebarFriend">
-                        <figure className="sidebarImgBox"><img className="sidebarImg" src="/public/img/person/4.jpeg" alt="" /></figure>
+                        <figure className="sidebarImgBox"><img className="sidebarImg" src="/src/assets/img/person/4.jpeg" alt="" /></figure>
                         <span className="sidebarFriendName">Sato</span>
                     </li>
                 </ul>

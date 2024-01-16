@@ -1,5 +1,5 @@
-import Home from '../pages/home/Home';
-import Comp from '../pages/comp/Comp';
+import Home from './pages/home/Home';
+import Comp from './pages/comp/Comp';
 
 import './resset.css';
 /* ルーティング処理用のモジュール読込 */
