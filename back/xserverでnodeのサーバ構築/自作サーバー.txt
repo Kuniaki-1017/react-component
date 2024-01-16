@@ -24,6 +24,8 @@ Host xserver
 【ターミナルコマンド】
 ssh xserver
 
+パスワード入力する→サーバー管理画面で設定したもの
+
 を実行すれば接続できるようになる。
 ※設定方法は先ほどのhttps://chigusa-web.com/blog/mac-ssh/に記載されてる
 
@@ -57,3 +59,7 @@ http://localhost:32768/
 http://localhost:32768/ はapp.listenで作ったサーバー。
 
 Basic認証うまくいかないのが課題。
+
+接続を切るには
+exit
+と入力

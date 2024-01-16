@@ -1,5 +1,5 @@
 import Share from '../share/Share';
-// import Post from '../Post/Post';
+import Post from '../Post/Post';
 import './Timeline.css';
 
 const Timeline = () => {
@@ -7,7 +7,7 @@ const Timeline = () => {
     <div className='timeline'>
       <div className="timelineWrapper">
         <Share />
-        {/* <Post /> */}
+        <Post />
       </div>
     </div>
 
