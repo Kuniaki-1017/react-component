@@ -6,7 +6,7 @@ const Rightbar = () => {
         <div className="rightbar">
             <div className="rightbarWrapper">
                 <div className="eventConteiner">
-                    <figure className="eventImgBox"><img src="/public/img/star.png" alt="" className="eventImg" /></figure>
+                    <figure className="eventStarImgBox"><img src="/public/img/star.png" alt="" className="starImg" /></figure>
                     <span className="eventText"><b>フォロワー限定イベント開催中!!</b></span>
 
                 </div>
@@ -15,10 +15,33 @@ const Rightbar = () => {
                 <ul className="rightbatFriendList">
                     <li className="rightbarFriend">
                         <figure className="rightbarProfileImgBox">
-                            <img src="/public/img/person/1.jpeg" alt="" className="ightbarProfileImg" />
+                            <img src="/public/img/person/1.jpeg" alt="" className="rightbarProfileImg" />
+
+                        </figure>
+                        <span className='rightbarOnline'></span>
+                        <span className="rightbarProfileName">kuniaki</span>
+                    </li>
+                    <li className="rightbarFriend">
+                        <figure className="rightbarProfileImgBox">
+                            <img src="/public/img/person/2.jpeg" alt="" className="rightbarProfileImg" />
                             <span className='rightbarOnline'></span>
                         </figure>
-                        <span className="rightbarProfileName">name</span>
+                        <span className="rightbarProfileName">tanaka</span>
+                    </li>
+                </ul>
+                <h3 className="promotionTitle">プロモーション広告</h3>
+                <ul className="promotionList">
+                    <li className="promotionItem">
+                        <figure className="promotionImgBox"><img src="/public/img/promotion/promotion1.jpeg" alt="" className="promotionImg" /></figure>
+                        <p className="promotionName">ショッピング</p>
+                    </li>
+                    <li className="promotionItem">
+                        <figure className="promotionImgBox"><img src="/public/img/promotion/promotion2.jpeg" alt="" className="promotionImg" /></figure>
+                        <p className="promotionName">カーショップ</p>
+                    </li>
+                    <li className="promotionItem">
+                        <figure className="promotionImgBox"><img src="/public/img/promotion/promotion3.jpeg" alt="" className="promotionImg" /></figure>
+                        <p className="promotionName">カンパニー</p>
                     </li>
                 </ul>
             </div>
