@@ -1,0 +1,59 @@
+Xserverにssh接続してXserver上にnodeをインストールし、自作のwebサーバを作りアクセスする方法
+※basic認証課題
+
+1
+https://chigusa-web.com/blog/mac-ssh/
+上サイトを参考にxserverにssh接続できるようにする。
+SSH接続は通常ターミナルで
+
+ssh -l [サーバーID] -p 10022 -i ~/.ssh/id_rsa_xserver [ホスト名]
+
+と入力するが、
+毎回大変なため設定で以下を設定すると
+
+【設定内容】
+Host xserver
+  HostName <サーバーID>.xsrv.jp
+  Port 10022
+  IdentityFile ~/.ssh/<プライベートキーのファイル名>
+  User <サーバーID>
+
+※<サーバーID>はレンタルサーバーのID
+※<プライベートキーのファイル名>秘密鍵記述のあるファイル名を指定。
+
+【ターミナルコマンド】
+ssh xserver
+
+を実行すれば接続できるようになる。
+※設定方法は先ほどのhttps://chigusa-web.com/blog/mac-ssh/に記載されてる
+
+
+
+2
+ローカルでexpressなどでwebサーバ作ったらサーバーにアップ。
+
+接続方法は
+https://qiita.com/yuu_1st/items/95865adfbe5ddb3eeeb0
+を参考ににする。
+
+具体的には
+「.htaccess」を作成し
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^$ http://localhost:32768/ [P,L]
+</IfModule>
+
+を記述したものを自分のプロジェクトのディレクトリに設置しないとアクセスできない。
+
+要は
+
+https://自分のドメイン/自分のプロジェクト
+
+にアクセスしたら
+http://localhost:32768/ 
+に飛ばす記述。
+
+http://localhost:32768/ はapp.listenで作ったサーバー。
+
+Basic認証うまくいかないのが課題。

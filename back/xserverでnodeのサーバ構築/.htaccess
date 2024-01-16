@@ -1,0 +1,5 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^$ http://localhost:32768/ [P,L]
+
+</IfModule>
