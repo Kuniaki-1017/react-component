@@ -17,4 +17,9 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
+  settings: {
+    react: {
+      version: '17', // Reactのバージョンを指定
+    },
+  },
 }
