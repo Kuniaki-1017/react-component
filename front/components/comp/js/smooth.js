@@ -35,3 +35,4 @@ scrolllinks.forEach((scrollLink) => {
             behavior: "smooth",
         });
     });
+});

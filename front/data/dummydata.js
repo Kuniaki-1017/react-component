@@ -1,7 +1,5 @@
 
-import { User, Post } from './types';
-
-export const Users: User[] = [
+export const Users = [
     {
         id: 1,
         profilePicture: "assets/person/1.jpeg",
@@ -29,7 +27,7 @@ export const Users: User[] = [
     },
 ];
 
-export const Posts: Post[] = [
+export const Posts = [
     {
         id: 1,
         desc: "コツコツの積み重ねが大事。",

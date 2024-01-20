@@ -1,7 +1,8 @@
-import Share from '../share/Share';
-import Post from '../Post/Post';
+import Share from '../share/Share.jsx';
 import './Timeline.css';
 import { Posts } from '../../data/dummydata.js';
+
+
 
 Posts
 
@@ -10,12 +11,7 @@ const Timeline = () => {
     <div className='timeline'>
       <div className="timelineWrapper">
         <Share />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
+       
       </div>
     </div>
 
