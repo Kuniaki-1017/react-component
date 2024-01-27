@@ -83,7 +83,7 @@ if (urlHash) {
         /*history.replaceState(null, '', window.location.pathname)でスムーススクロールが実行される前に、ブラウザの履歴が変更*/
         /*ページの履歴が更新されます。これにより、ユーザーが戻るボタンを使用した際に、スムーススクロールが発生しないようになります。 */
         /* window.location.pathnameは現在表示されているURLのドメインとクエリ文字列を除いた値を取得できる*/
-        /* つまりhttp://hhoge.com/company/#infoの場合　→ /company/が取得される*/
+        /* つまりhttp://hhoge.com/company/#infoの場合→ /company/が取得される*/
         history.replaceState(null, '', window.location.pathname);
         window.scrollTo(0, 0);
 

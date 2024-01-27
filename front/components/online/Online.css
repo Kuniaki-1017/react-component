@@ -1,0 +1,128 @@
+.rightbar {
+    flex: 3.5;
+}
+
+.rightbarWrapper {
+    padding: 20px 20px 0 0;
+}
+
+.eventConteiner {
+    display: flex;
+    align-items: center;
+}
+
+.eventStarImgBox {
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+.starImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.eventText {
+    font-weight: 300;
+    font-size: 15px;
+}
+
+.eventThumbBox {
+    width: 100%;
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.eventThumbImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.rightbarTitle {
+    margin-bottom: 20px;
+}
+
+.rightbatFriendList {
+    width: 100%;
+}
+
+.rightbarFriend {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.rightbarProfileImgBox {
+
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.rightbarProfileImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.rightbarOnline {
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    background: red;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    z-index: 1;
+}
+
+.promotionList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+
+
+.rightbarProfileName {
+    font-weight: 500;
+
+}
+
+.promotionTitle {
+    font-size: 18px;
+    font-weight: 550;
+    margin-bottom: 10px;
+}
+
+.promotionImgBox {
+    width: 100%;
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.promotionImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.promotionName {
+    font-size: 16px;
+    color: #555;
+}
