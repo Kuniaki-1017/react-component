@@ -2,20 +2,26 @@
 import {Routes, Route} from 'react-router-dom';
 import Login from './pages/Login/Login';
 import './resset.css';
+import Home from './pages/Home/Home';
+import Register from './pages/Register/Register';
+import Category from './pages/Category/Category';
+import Search from './pages/Search/Search';
+import Detail from './pages/Detail/Detail';
+import Faborite from './pages/Faborite/Faborite';
+import Admin from './pages/Admin/Admin';
 
 function App() {
 
   return (
     <Routes>
       <Route path="/" element={<Home/>}/>
-      <Route path="/" element={<Login/>}/>
-      <Route path="/" element={<Register/>}/>
-      <Route path="/" element={<Search/>}/>
-      <Route path="/" element={<Category/>}/>
-      <Route path="/" element={<Detail/>}/>
-      <Route path="/" element={<Detail/>}/>
-      <Route path="/" element={<Faborite/>}/>
-      <Route path="/" element={<Admin/>}/>
+      <Route path="/login" element={<Login/>}/>
+      <Route path="/register" element={<Register/>}/>
+      <Route path="/search" element={<Search/>}/>
+      <Route path="/category" element={<Category/>}/>
+      <Route path="/detail" element={<Detail/>}/>
+      <Route path="/faborite" element={<Faborite/>}/>
+      <Route path="/admin" element={<Admin/>}/>
     </Routes>
    
     
