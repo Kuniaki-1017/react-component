@@ -10,9 +10,13 @@ import Detail from './pages/Detail/Detail';
 import Faborite from './pages/Faborite/Faborite';
 import Admin from './pages/Admin/Admin';
 
+
 function App() {
+  
 
   return (
+    <>
+ 
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/login" element={<Login/>}/>
@@ -24,6 +28,7 @@ function App() {
       <Route path="/admin" element={<Admin/>}/>
     </Routes>
    
+    </>
     
   )
 }
