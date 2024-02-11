@@ -4,6 +4,10 @@ import { createGlobalStyle } from "styled-components";
 import {gvP,gvB,gv,mediaP, mediaB, media } from './mixin';
 
 const GlobalStyle =  createGlobalStyle `
+
+*,*::before,*::after{
+    box-sizing:border-box;
+}
 html{
     /*1361以上:1rem=10px*/
     font-size:62.5%;
@@ -72,7 +76,10 @@ body{
     }
     /*ホバー*/
     .hover{
-
+        transition: .3s;
+        &:hover{
+            opacity:.8;
+        }
     }
     
     /*コンテンツラップ*/
