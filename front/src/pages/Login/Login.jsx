@@ -8,14 +8,86 @@ import {gvP,gvB,gv,mediaP, mediaB, media } from '../../mixin';
     const LoginWrap = styled.div`
     `;
 
-    const Header = styled.header`
-        background-color: #1877F2;
-        font-size:${gvP(30)};
-        ${mediaP(`
-        color:red;
-        padding:${gvB(50)};
-        `)}
 
+    const Header = styled.header`
+    background-color: #1877F2;
+    height: 80px;
+    line-height: 80px;
+    
+    ${mediaP(`
+    height: ${gvP(80)};
+    line-height:  ${gvP(80)};
+    font-size:${gvP(36)};
+    `)}
+    ${mediaB(`
+    height: ${gvB(80)};
+    line-height:  ${gvB(80)};
+    `)}
+    ${media(`
+    height: ${gv(60)};
+    line-height:  ${gv(60)};
+    `)}
+
+
+
+    .header{ 
+        &__in{
+            padding: 0 30px;
+            ${mediaP(`
+            padding:0 ${gvP(30)};
+            `)}
+            ${mediaB(`
+                padding:0 ${gvB(30)};
+            `)}
+            ${media(`
+                padding:0 ${gv(20)};
+            `)}
+        }
+
+        &__logo{
+            font-size: 3.4rem;
+            color:#fff;
+            font-weight:bold;
+            ${mediaP(`
+                font-size: 3.4rem;
+            `)}
+            ${mediaB(`
+                font-size:3rem;
+            `)}
+            ${media(`
+                font-size: 2.4rem;
+            `)}
+        }
+    }`;
+
+    const Footer = styled.footer`
+    background-color: #1877F2;
+    height: 80px;
+    text-align:center;
+    ${mediaP(`
+    height: ${gvP(80)};
+    line-height:  ${gvP(80)};
+    `)}
+    ${mediaB(`
+    height: ${gvB(80)};
+    line-height:  ${gvB(80)};
+    `)}
+    ${media(`
+    height: ${gv(60)};
+    line-height:  ${gv(60)};
+    `)}
+
+    .footer{
+        &__copy{
+ 
+            color:#fff;
+        }
+        &__copy-mark{
+            font-size:1.8rem;
+            margin:0 4px;
+            vertical-align:middle;
+        }
+    }
     `;
     
 const Login = () => {
@@ -43,6 +115,9 @@ const Login = () => {
                 </div>
             </div>
         </LoginWrap>
+        <Footer className='footer'>
+            <small className="footer__copy">Know How<span className="footer__copy-mark">&copy;</span>2024</small>
+        </Footer>
         </>
     )
 }
