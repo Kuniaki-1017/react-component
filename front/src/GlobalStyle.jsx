@@ -4,6 +4,10 @@ import { createGlobalStyle } from "styled-components";
 import {gvP,gvB,gv,mediaP, mediaB, media } from './mixin';
 
 const GlobalStyle =  createGlobalStyle `
+
+*,*::before,*::after{
+    box-sizing:border-box;
+}
 html{
     /*1361以上:1rem=10px*/
     font-size:62.5%;
@@ -22,6 +26,7 @@ html{
     `)}
 }
 body{
+    background-color: #F0F2F5;
     color: #333;
     font-family: "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN", "游ゴシック", YuGothic, "メイリオ", Meiryo, sans-serif;
     position: relative;
@@ -29,6 +34,8 @@ body{
 	width: 100%;
 	font-weight: 400;
     font-size: 1.6rem;
+    /* gv用css:スクロールバー分はみ出た時用 */
+    overflow-x:hidden;
     /*1360まで:1rem=10px*/
     ${mediaP(`
         font-size:${gvP(16)};
@@ -42,8 +49,7 @@ body{
         font-size:${gv(16)};
     `)}
 
-    //共通css////
-
+    //汎用css///////////////
     /*スイッチ*/
     .pc{
         display: block;
@@ -70,9 +76,43 @@ body{
     }
     /*ホバー*/
     .hover{
-
+        transition: .3s;
+        &:hover{
+            opacity:.8;
+        }
     }
- 
+    
+    /*コンテンツラップ*/
+    .wrap{
+        margin-bottom:${gvP((80))};
+        ${mediaP(`
+        margin-bottom:${gvP((80))};
+        `)}
+        ${mediaB(`
+        margin-bottom:${gvB((60))};
+        `)}
+        ${media(`
+        margin-bottom:${gv((40))};
+        `)}
+    }
+    /*インナー*/
+    .inner{
+        width:100%;
+        max-width:1300px;
+        padding:0 30px;
+        margin:0 auto;
+        ${mediaP(`
+        max-width:${gvP(1300)};
+        padding:0 ${gvP(30)};
+        `)}
+        ${mediaB(`
+        max-width:auto;
+        padding:0 ${gvB(30)};
+        `)}
+        ${media(`
+        padding:0 ${gvP(20)};
+        `)}
+    }
 }
 
 
