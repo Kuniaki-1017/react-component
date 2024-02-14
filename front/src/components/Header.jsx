@@ -58,7 +58,7 @@ const HeaderWrap = styled.header`
 const Header = () => {
     return (
         <HeaderWrap className="header">
-        <div className="header__in"><a href="#" className="header__logo">Knouw How</a></div>
+        <div className="header__in"><a href="#" className="header__logo">Know How</a></div>
         </HeaderWrap>
     )
 }
