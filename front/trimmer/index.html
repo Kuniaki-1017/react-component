@@ -19,12 +19,52 @@
         <div class="main__inner">
             <section class="trim">
                 <div class="trim__inner">
-                    <h2 class="trim__ttl">Trim Generator</h2><!-- /.h2 trim__ttl -->
-                    <div class="trim__conteiner">
+                    <h2 class="trim__ttl">Trim Generator</h2><!-- /.trim__ttl -->
+                    <section class="trim__section">
+                        <h3 class="trim__ttl--s">Trim Setting</h3><!-- /.h2 trim__ttl -->
+                        <div class="trim__content-top">
+                            <div class="trim__left">
+                                <dl class="trim__list">
+                                    <label class="trim__label">
+                                        <dt class="trim__list-ttl">画像</dt><!-- /.trim__list-ttl -->
+                                        <dd class="trim__desc">
+                                            <input type="file" class="trim__input-img" name="file">
+                                        </dd><!-- /.trim__desc -->
+                                    </label><!-- /.trim__label -->
+                                    <label class="trim__label">
+                                        <dt class="trim__list-ttl">余白</dt><!-- /.trim__list-ttl -->
+                                        <dd class="trim__desc">
+                                            <input type="number" class="trim__input-padding" name="padding">
+                                        </dd><!-- /.trim__desc -->
+                                    </label><!-- /.trim__label -->
+                                    <label class="trim__label">
+                                        <dt class="trim__list-ttl">断裁位置</dt><!-- /.trim__list-ttl -->
+                                        <dd class="trim__desc">
+                                            <input type="number" class="trim__input-cut" name="cut">
+                                        </dd><!-- /.trim__desc -->
+                                    </label><!-- /.trim__label -->
+                                    <label class="trim__label">
+                                        <dt class="trim__list-ttl">トリムサイズ</dt><!-- /.trim__list-ttl -->
+                                        <dd class="trim__desc">
+                                            <input type="number" class="trim__input-trim" name="trim">
+                                        </dd><!-- /.trim__desc -->
+                                    </label><!-- /.trim__label -->
+                                </dl><!-- /.trim__list -->
+                            </div><!-- /.trim__left -->
+                            <div class="trim__right">
+                                <img class="trim__right-img"
+                                    src="https://placehold.jp/c6c3c3/ffffff/300x300.png?text=%E3%83%80%E3%83%9F%E3%83%BC%E7%94%BB%E5%83%8F%0A"
+                                    alt="">
+                            </div><!-- /.trim__right -->
+                        </div><!-- /.trim__content-top -->
+                    </section>
+                    <section class="trim__section">
+                        <h3 class="trim__ttl--s">Ttim Display</h3><!-- /.trim__ttl -->
                         <canvas class="trim__canvas"></canvas><!-- /.trim__canvas -->
-                    </div><!-- /.trim__conteiner -->
-                </div><!-- /.trim__inner -->
-            </section><!-- /.trim -->
+                    </section><!-- /.trim__section -->
+                </div><!-- /.trim__conteiner -->
+        </div><!-- /.trim__inner -->
+        </section><!-- /.trim -->
         </div><!-- /.main__inner -->
     </main><!-- /.main -->
 
