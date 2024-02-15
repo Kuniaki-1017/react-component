@@ -1,4 +1,100 @@
 @charset "utf-8";
+@use "sass:math";
+@use "sass:map";
+
+
+//=====mixin=====//
+
+//メディアクエリ/////
+@mixin media($breakpoint) {
+
+    //#{}こちらを利用することで文字列を埋め込める
+    //map-getで連想配列を使用。第一引数に配列名、第二引数にキーをを指定
+    @media #{map-get($breakpoints, $breakpoint)} {
+        @content;
+    }
+}
+
+$breakpoints: (
+    sp: "only screen and (max-width: 767px)",
+    //767px以下
+    pc: "only screen and (min-width: 768px)",
+    //768px以上
+    pc-l: "only screen and (min-width: 1200px)",
+    //1200px以上
+
+);
+
+//可変////////
+:root {
+    --vw: 1vw;
+}
+
+// Width
+$base: 750;
+$basePc: 1200;
+//ある数字が全体に対してどのくらいの割合か算出するには,,,ある数字/全体＊100で出せる。その単位をvwに変換するだけ
+//ある数字が大きくなれば基準値に対しての割合が増えるため画面幅に応じてサイズを可変にできる
+//算出したい値($size)を基準値で割って、算出したい値が基準値($base)に対してどのくらいの割合か算出
+//上記の算出値に100をかけて%にする
+//%の値に1vw(--vw)をかけることで数値は変えず単位をvwに変換
+//$basePc: 1200; $size:240を例にすると
+//算出したい値(対象を画面幅1200の時に240pxにしたい=240px)を基準値(1200)に対して割る
+//そうすると　20% = 20vwという回答が出る
+
+// VW
+@function getvw($size) {
+    @return calc($size / $base * 100 * var(--vw));
+}
+
+@function getvwPc($size) {
+    @return calc($size / $basePc * 100 * var(--vw));
+}
+
+
+//=====base=====//
+html {
+    //htmlにフォントサイズを指定することで動的にフォントサイズを変更できる
+
+    //768px以上で1200幅の画面サイズ時に可変値で10px
+    @include media(pc) {
+        font-size: getvwPc(10);
+    }
+
+    //1200px以上では固定値でフォントサイズを16px/0.625 = 10pxにする
+    @include media(pc-l) {
+        font-size: 62.5%;
+    }
+
+    //767px以下で画面幅750pxの時フォントサイズを可変値で20pxにする
+    //750 / 2 = 375px 375px→スマホサイズで10pxくらいになる
+    @include media(sp) {
+        font-size: getvw(20);
+    }
+
+}
+
+body {
+    background-color: #F0F2F5;
+    color: #333;
+    line-height: 1.7;
+    font-family: "Hiragino Sans", "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN", "游ゴシック", YuGothic, "メイリオ", Meiryo, sans-serif;
+    //topへ戻るボタン等を使用するときにbodyに対して位置を決めたいため指定
+    position: relative;
+    //単語の折り返しをする指定（英語など？）
+    word-break: break-word;
+    width: 100%;
+    font-weight: 400;
+    //html要素に指定したフォントサイズを基準とする
+    //1200以上では16px固定(16px*0.625*1.6)
+    //1199以下768では：1199では10px*1.6remで16pxで画面幅が小さくなるにつれサイズが小さくなる
+    font-size: 1.6rem;
+
+
+    @include media(sp) {
+        font-size: 1.6rem;
+    }
+}
 
 *,
 *::after,
@@ -6,4 +102,133 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+//=====スタイル=====//
+
+
+//header
+.header {
+    width: 100%;
+    height: getvwPc(90);
+    background-color: #1877F2;
+    line-height: getvwPc(90);
+
+    @include media(pc-l) {
+        height: 90px;
+        line-height: 90px;
+    }
+
+    @include media(sp) {
+        height: getvw(90);
+        line-height: getvw(90);
+    }
+
+    &__inner {
+        padding: 0 getvwPc(20);
+
+        @include media(pc-l) {
+            padding: 0 20px;
+        }
+
+        @include media(sp) {
+            padding: 0 getvw(20);
+        }
+
+    }
+
+    &__logo {
+        font-size: 3.2rem;
+        font-weight: bold;
+        color: #fff;
+
+        @include media(sp) {
+            font-size: 1.8rem;
+        }
+    }
+}
+
+//main
+.main {
+    width: 100%;
+
+    &__inner {
+        width: 100%;
+        max-width: calc(getvwPc(1000) + getvwPc(40)*2);
+        padding: getvwPc(80) getvwPc(40);
+        margin: 0 auto;
+        min-height: getvwPc(200);
+
+        @include media(pc-l) {
+            max-width: calc(1000px + 40px *2);
+            padding: 80px 40px;
+            margin: 0 auto;
+            min-height: 200px;
+
+        }
+
+        @include media(sp) {
+            max-width: none;
+            padding: getvw(40) getvw(20);
+            min-height: getvw(200);
+        }
+    }
+}
+
+.trim {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+
+    &__inner {
+        padding: getvwPc(20);
+
+        @include media(pc-l) {
+            padding: 15px;
+        }
+
+        @include media(sp) {
+            padding: getvw(15);
+        }
+    }
+}
+
+
+//footer
+.footer {
+    width: 100%;
+    height: getvwPc(180);
+    background-color: #1877F2;
+    line-height: getvwPc(180);
+
+    @include media(pc-l) {
+        height: 180px;
+        line-height: 180px;
+    }
+
+    @include media(sp) {
+        height: getvw(180);
+        line-height: getvw(180);
+    }
+
+    &__copy {
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+
+        @include media(sp) {
+            font-size: 1rem;
+        }
+    }
+
+    &__copy-mark {
+        font-size: 2rem;
+
+        @include media(sp) {
+            font-size: 1.6rem;
+        }
+    }
 }
