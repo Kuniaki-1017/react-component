@@ -266,7 +266,6 @@ body {
   object-position: center;
 }
 .trim__canvas {
-  width: 100%;
   border: 1px solid #999;
   margin-top: calc(2.6666666667 * var(--vw));
 }
