@@ -1,5 +1,13 @@
 {
     "emmet.includeLanguages": {
         // "javascriptreact": "css"
+      },
+
+    "liveSassCompile.settings.formats": [
+      {
+        "format": "expanded",
+        "extensionName": ".css",
+        "savePath": "/front/trimmer/"
       }
+    ],
 }
