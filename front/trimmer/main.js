@@ -100,3 +100,16 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 // }
 
 
+//=====Blobの生成とFileAPIによる読み込み、createObjectURLにてデータのURL生成でダウンロードデータ生成====//
+const name = '小沼邦明';
+const a = document.getElementById('a')
+console.log(a)
+const blob = new Blob([name], { type: 'taxt/plain' });
+console.log(blob)
+const reader = new FileReader();
+reader.addEventListener('load', () => {
+    console.log(reader.result);
+})
+reader.readAsText(blob);
+
+a.href = window.URL.createObjectURL(blob);
