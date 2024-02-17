@@ -1,47 +1,30 @@
 
-//=====ユーザー定義関数=====//
-//セレクタから取得
-const getQuery = (el) => {
-    return document.querySelector(el);
-}
-//idから取得
-const getId = (el) => {
-    return document.getElementById(el);
-}
+//=====機能=====//
+
+//①選択した画像をTrim Beforeに表示✅
+//②boforeに表示された画像に対しtrimMarkと余白、断裁位置を設定
+//③trimボタンを押すと設定したプロパティでトリミングされる
+//④トリミング後の画像をafterに表示
+//⑤afterに表示された画像をダウンロード
+
+//=====選択した画像をTrim begforeに描画=====//
+
+const before = document.querySelector('.js-before');
+const imgFile = document.querySelector('.js-imgFile');
+//canvas要素を取得
+const canvasEl = document.querySelector('.js-canvas');
+//canvasのコンテキストを用意
+const ctx = canvasEl.getContext('2d');
+
+//imgeオブジェクトを生成
+const image = new Image();
+const cvsWidth = 800;
+const cvsHeight = 800;
+
+canvasEl.width = cvsWidth;
+canvasEl.height = cvsHeight;
 
 
-//=====canvas+Imageクラスにて画像を表示=====//
-// const canvas = () => {
-//     const canvasEL = getQuery('.js-canvas');
-//     const cvsWidth = 800;
-//     const cvsHeight = 800;
-
-//     canvasEL.width = cvsWidth;
-//     canvasEL.height = cvsHeight;
-
-//     if (canvasEL.getContext) {
-//         //canvasの初期化
-//         const cvs = canvasEL.getContext('2d');
-//         //canvasに画像を表示するためのクラスをインスタンス化
-//         const cvsImg = new Image();
-//         //画像ファイルのパスを設定
-//         cvsImg.src = "https://www.tam-tam.co.jp/tipsnote/wpdata/wp-content/uploads/2017/10/canvas_image.jpg";
-//         //画像が読み込まれたら描画の処理を行う
-//         cvsImg.onload = function () {
-//             //drawImageメソッドで表示する画像の情報を設定しcanvas内に画像（cvsImg）を表示
-//             //1:表示する画像のオブジェクト,2:X（横方向の開始位置）,3:Y(縦方向の開始位置),4:表示する画像の横幅,5:表示する画像の縦の高さ
-//             cvs.drawImage(cvsImg, 0, 0, this.width, this.height);
-//             console.log('imgWidth', this.width, 'imgHeight', this.height);
-//         }
-//     }
-// }
-// canvas();
-
-//=====File APIにて画像のアップロードと表示=====//
-const result = getQuery('.js-result');
-const imgFile = getQuery('.js-imgFile');
-console.log(result);
-console.log(imgFile);
 
 //loadLocalImg:ローカルの画像を読込む関数を定義
 //引数に選択されたファイルオブジェクトが入る
@@ -58,7 +41,6 @@ function loadLocalImg(e) {
     //引数に渡されたファイル情報を取得
     //e.target/files[0]の中にimgの情報が入っている
     let fileData = e.target.files[0];
-    console.log('選択されたファイル:', fileData);
     console.log(fileData.type);
 
     //画像ファイル以外はエラーを出す
@@ -75,13 +57,13 @@ function loadLocalImg(e) {
     //インスタンス名.reaadAs~が実行されると下記.onladが実行されresult等の値が取得できる
     //onloadの他にエラーが発生した時用の.onerrorなどもある
     reader.onload = function () {
+
         //読み込んだファイル表示用のimgタグを生成
         let img = document.createElement('img');
-        console.log('File API Result', reader.result)
         //imgタグのsrcに画像データを設定
         img.src = reader.result;
-        //上記imgタグをresultクラスがついたタグに子要素に挿入
-        result.appendChild(img);
+        //上記imgタグをbeforeの子要素に挿入
+        before.appendChild(img);
     }
 }
 
@@ -93,8 +75,28 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     imgFile.addEventListener('change', loadLocalImg, false);
 } else {
     imgFile.style.display = 'none'
-    result.innerHTML = 'File APIに対応したブラウザでご確認ください'
+    before.innerHTML = 'File APIに対応したブラウザでご確認ください'
 }
 
+
+
+// //画像のパスをsrcに設定
+// image.src = reader.result;
+// // image.src = "https://www.tam-tam.co.jp/tipsnote/wpdata/wp-content/uploads/2017/10/canvas_image.jpg";
+// //imge.srcに渡した画像が読み込まれてから処理するため、実行したい関数をimage.onloadに渡す
+// image.onload = function () {
+//     //drawImageの引数
+//     //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+//     // ①image - トリミングしてブラウザに表示する画像自体。
+//     // ②sx（ソース画像の x 軸）-このパラメーターは、x 軸から画像を切り抜くまたは切り抜きを開始する場所を示します。
+//     // ③sy（ソース画像の y 軸）-このパラメーターは、y 軸から画像を切り抜くまたは切り抜きを開始する場所を示します。
+//     // ④sWidth - sx から始まる画像の幅。
+//     // ⑤sHeight - sy から始まる画像の高さ。
+//     // ⑥dx - x 軸から画面に画像を描画し始めるポイント。
+//     // ⑦dy - 画面上で y 軸から画像の描画を開始するポイント。
+//     // ⑧dWidth - 画面に表示する必要のある画像の長さ。
+//     // ⑨dHeight - 画面に表示する必要のある画像の高さ。
+//     ctx.drawImage(image, 50, 100, 100, 100, 0, 0, 100, 100);
+// }
 
 

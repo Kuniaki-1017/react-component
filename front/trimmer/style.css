@@ -265,6 +265,16 @@ body {
   object-fit: cover;
   object-position: center;
 }
+.trim__before {
+  display: inline-block;
+  border: 2px dotted #ccc;
+  min-width: 300px;
+  min-height: 300px;
+  overflow: scroll;
+}
+.trim__before > img {
+  vertical-align: middle;
+}
 .trim__canvas {
   border: 1px solid #999;
   margin-top: calc(2.6666666667 * var(--vw));
@@ -279,6 +289,42 @@ body {
     margin-top: calc(4.2666666667 * var(--vw));
     width: 100%;
     max-width: none;
+  }
+}
+.trim__btn {
+  margin-top: calc(1.6666666667 * var(--vw));
+  display: block;
+  width: calc(15 * var(--vw));
+  height: calc(4 * var(--vw));
+  text-decoration: none;
+  background-color: #1877F2;
+  border: none;
+  border-radius: calc(0.4166666667 * var(--vw));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.trim__btn:hover {
+  opacity: 0.7;
+}
+@media only screen and (min-width: 1200px) {
+  .trim__btn {
+    margin-top: 20px;
+    height: 48px;
+    width: 180px;
+    border-radius: 5px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .trim__btn {
+    font-size: 1.2rem;
+    margin-top: calc(2 * var(--vw));
+    width: calc(24 * var(--vw));
+    height: calc(6.4 * var(--vw));
+    border-radius: calc(0.6666666667 * var(--vw));
   }
 }
 
