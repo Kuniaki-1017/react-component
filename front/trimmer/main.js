@@ -100,16 +100,49 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 // }
 
 
-//=====Blobの生成とFileAPIによる読み込み、createObjectURLにてデータのURL生成でダウンロードデータ生成====//
-const name = '小沼邦明';
-const a = document.getElementById('a')
-console.log(a)
-const blob = new Blob([name], { type: 'taxt/plain' });
-console.log(blob)
-const reader = new FileReader();
-reader.addEventListener('load', () => {
-    console.log(reader.result);
-})
-reader.readAsText(blob);
+//=====Blobの生成、FILE API読み込み、createObjectAPIの活用======//
+//Blobの生成とFileAPIによる読み込み、createObjectURLにてデータのURL生成でダウンロードデータ生成
+// const name = '小沼邦明';
+// const a = document.getElementById('a')
+// console.log(a)
+// const blob = new Blob([name], { type: 'taxt/plain' });
+// console.log(blob)
+// const reader = new FileReader();
+// reader.addEventListener('load', () => {
+//     console.log(reader.result);
+// })
+// reader.readAsText(blob);
 
-a.href = window.URL.createObjectURL(blob);
+// a.href = window.URL.createObjectURL(blob);
+
+//canvasの画像のダウンロード方法
+const canvas = document.getElementById('imgArea');
+const a = document.getElementById('a')
+const ctx2 = canvas.getContext('2d');
+
+ctx2.fillStyle = "blue";
+ctx2.fillRect(10, 20, 100, 100);
+
+//blobにはcanvasで作成したオブジェクトが入ってくるので定義の必要なし。※イベントオブジェクトのようなもの
+canvas.toBlob((blob) => {
+    a.href = window.URL.createObjectURL(blob);
+})
+
+//Blobの文字をbase64に変換する方法
+// const str = '小沼　邦明';
+// const blob = new Blob([str], { type: 'text/plan' });
+
+// const reader = new FileReader();
+// let b64 = '';
+// reader.onload = () => {
+//     b64 = reader.result;
+
+// }
+
+// reader.readAsDataURL(blob)
+
+// const result = window.atob(b64.replace(/^.*,/, ''));
+
+// console.log(result);
+
+
