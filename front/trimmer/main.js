@@ -145,10 +145,20 @@
 
 //===== FileSaver.jsの使用======//
 //ファイル保存などをクロスブラウザ対応で実装するには大変なので解決策としてFileSaver.jsを使用する
+//特にIEだとaタグのdownload属性がない
 // FileSaver.jsは、Blob形式のデータをクロスブラウザの実装を行うことができるライブラリ
 
 
+const canvas2 = document.getElementById('imgArea');
+const ctx3 = canvas2.getContext('2d');
 
+ctx3.fillStyle = "blue";
+ctx3.fillRect(10, 20, 100, 100);
+
+const fileName = "test.jpg";
+canvas2.toBlob((blob) => {
+    saveAs(blob, fileName);
+}, 'image/jpeg');
 
 
 

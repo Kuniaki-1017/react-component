@@ -10,4 +10,5 @@
         "savePath": "/front/trimmer/"
       }
     ],
+    "liveServer.settings.port": 5501,
 }
