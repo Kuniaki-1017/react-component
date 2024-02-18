@@ -149,16 +149,103 @@
 // FileSaver.jsは、Blob形式のデータをクロスブラウザの実装を行うことができるライブラリ
 
 
-const canvas2 = document.getElementById('imgArea');
-const ctx3 = canvas2.getContext('2d');
 
-ctx3.fillStyle = "blue";
-ctx3.fillRect(10, 20, 100, 100);
 
-const fileName = "test.jpg";
-canvas2.toBlob((blob) => {
-    saveAs(blob, fileName);
-}, 'image/jpeg');
 
+
+// const fileName = "test.jpg";
+// canvas2.toBlob((blob) => {
+//     saveAs(blob, fileName);
+// }, 'image/jpeg');
+
+//=====ファイルダウンロード用の関数定義=====//
+
+
+
+//=====トリミング処理用の関数定義=====//
+//トリミング関数：hoge.drawImage(要素,sx,sy,sWidth,sHeight,dx,dy,dWidth,dHeight)
+//要素(トリミング用の要素)
+// sx      (元画像の切り抜き始点X)
+// sy      (元画像の切り抜き始点Y)
+// sWidth  (元画像の切り抜きサイズ：横幅)
+// sHeight (元画像の切り抜きサイズ：高さ)
+// dx      (Canvasの描画開始位置X)
+// dy      (Canvasの描画開始位置Y)
+// dWidth  (Canvasの描画サイズ：横幅)
+// dHeight (Canvasの描画サイズ：高さ)
+// trim = (el, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) => {
+//     el.drawImage(
+//         chara,
+//         150,  // sx      (元画像の切り抜き始点X)
+//         130,  // sy      (元画像の切り抜き始点Y)
+//         130,  // sWidth  (元画像の切り抜きサイズ：横幅)
+//         180,  // sHeight (元画像の切り抜きサイズ：高さ)
+//         0,  // dx      (Canvasの描画開始位置X)
+//         0,  // dy      (Canvasの描画開始位置Y)
+//         480,  // dWidth  (Canvasの描画サイズ：横幅)
+//         680   // dHeight (Canvasの描画サイズ：高さ)
+//     )
+// }
+
+
+//=====トリムマーク用の関数定義=====//
+//L字マーク生成関数
+// function addTrim(ctx, style, width, x1, y1, x2, y2) {
+//     ctx.beginPath();
+//     ctx.strokeStyle = style;
+//     ctx.lineWidth = width;
+//     ctx.moveTo(x1, y1);
+//     ctx.lineTo(x2, y2);
+//     ctx.lineTo(y1, x1);
+//     ctx.moveTo(50, 20);
+//     ctx.lineTo(50, 40);
+//     ctx.stroke();
+
+// }
+// addTrim(ctx, 'blue', 2, 40, 10, 40, 40);
+
+
+const imgFile = document.getElementById('file');
+
+
+//=====ファイルを選択からファイルが選択された時の処理=====//
+imgFile.addEventListener('change', (e) => {
+    // canvas要素を取得、cvsに代入
+    const cvs = document.getElementById('canvas');
+    //canvasのサイズを設定※これを設定しないと画像描画が変になる
+    cvs.width = 1000;
+    cvs.height = 1000;
+    //canvasのコンテキスト生成
+    const ctx = cvs.getContext('2d');
+    //キャンバスの中身をクリア
+    ctx.clearRect(0, 0, cvs.width, cvs.height);
+    // 選択されたファイルのMIMEがimegeか判定
+    if (e.target.files[0].type.match('image.*')) {
+        // 選択されたファイルをimgDataに格納
+        const imgData = e.target.files[0];
+        console.log(imgData)
+
+        //FileReaderオブジェクトをインスタンス化
+        const reader = new FileReader();
+        //ファイル読込を実行
+        reader.readAsDataURL(imgData);
+        reader.onload = () => {
+            //imgオブジェクトをインスタンス化：後ほど画像を出力する時に使用
+            const img = new Image();
+            //選択した画像をインスタンス化したimgのsrcに代入
+            //srcに代入する前にimgDataをURLのメソッドでURLに変換
+            img.src = reader.result;
+            img.onload = () => {
+                const imgW = img.width;
+                const imgH = img.height;
+                console.log(imgW, imgH)
+                ctx.drawImage(img, 0, 0, imgW, imgH);
+            }
+        }
+
+    } else {
+        alert('img画像を選択してください')
+    }
+});
 
 

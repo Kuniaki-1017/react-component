@@ -20,59 +20,18 @@
             <section class="trim">
                 <div class="trim__inner">
                     <h2 class="trim__ttl">Trim Generator</h2><!-- /.trim__ttl -->
-                    <section class="trim__section">
-                        <h3 class="trim__ttl--s">Trim Setting</h3><!-- /.h2 trim__ttl -->
-                        <div class="trim__content-top">
-                            <div class="trim__left">
-                                <dl class="trim__list">
-                                    <label class="trim__label">
-                                        <dt class="trim__list-ttl">画像</dt><!-- /.trim__list-ttl -->
-                                        <dd class="trim__desc">
-                                            <input type="file" class="trim__input-img js-imgFile" name="file">
-                                            <div class="trim__result"></div><!-- /.result -->
-                                        </dd><!-- /.trim__desc -->
-                                    </label><!-- /.trim__label -->
-                                    <label class="trim__label">
-                                        <dt class="trim__list-ttl">余白</dt><!-- /.trim__list-ttl -->
-                                        <dd class="trim__desc">
-                                            <input type="number" class="trim__input-padding" name="padding">
-                                        </dd><!-- /.trim__desc -->
-                                    </label><!-- /.trim__label -->
-                                    <label class="trim__label">
-                                        <dt class="trim__list-ttl">断裁位置</dt><!-- /.trim__list-ttl -->
-                                        <dd class="trim__desc">
-                                            <input type="number" class="trim__input-cut" name="cut">
-                                        </dd><!-- /.trim__desc -->
-                                    </label><!-- /.trim__label -->
-                                    <label class="trim__label">
-                                        <dt class="trim__list-ttl">トリムサイズ</dt><!-- /.trim__list-ttl -->
-                                        <dd class="trim__desc">
-                                            <input type="number" class="trim__input-trim" name="trim">
-                                        </dd><!-- /.trim__desc -->
-                                    </label><!-- /.trim__label -->
-                                </dl><!-- /.trim__list -->
-                            </div><!-- /.trim__left -->
-                            <div class="trim__right">
-                                <img class="trim__right-img"
-                                    src="https://placehold.jp/c6c3c3/ffffff/300x300.png?text=%E3%83%80%E3%83%9F%E3%83%BC%E7%94%BB%E5%83%8F%0A"
-                                    alt="">
-                            </div><!-- /.trim__right -->
-                        </div><!-- /.trim__content-top -->
-                    </section>
-                    <section class="trim__section">
-                        <h3 class="trim__ttl--s">Trim Before</h3><!-- /.trim__ttl -->
-                        <div class="trim__before js-before"></div><!-- /.trim__before -->
-                        <button class="trim__btn trim__btn--triming">トリミング</button>
-                    </section><!-- /.trim__section -->
+                    <div class="trim__contents">
+                        <label class="trim__label">
+                            <input id="file" class="trim__input trim__input--file"
+                                type="file"></label><!-- /.trim__label -->
+                        <canvas class="trim__canvas" id="canvas"></canvas><!-- /.trim__canvas -->
+                        <button class="trim__btn">ダウンロード</button><!-- /.trim__btn -->
+                    </div><!-- /.trim__contents -->
 
-                    <section class="trim__section">
-                        <h3 class="trim__ttl--s">Trim After</h3><!-- /.trim__ttl -->
-                        <canvas class="trim__canvas js-canvas"></canvas><!-- /.trim__canvas -->
-                        <button class="trim__btn trim__btn--download">ダウンロード</button>
-                        <a id="a" class="trim__btn trim__btn--download" download="sample.jpg" href="">ダウンロード</a>
-                        <canvas id="imgArea" width="600" height="400"></canvas>
-                    </section><!-- /.trim__section -->
-                </div><!-- /.trim__conteiner -->
+                </div>
+            </section>
+
+        </div><!-- /.trim__conteiner -->
         </div><!-- /.trim__inner -->
         </section><!-- /.trim -->
         </div><!-- /.main__inner -->
