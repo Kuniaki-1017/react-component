@@ -110,7 +110,7 @@
 
 // a.href = window.URL.createObjectURL(blob);
 
-//canvasの画像のダウンロード方法
+// //canvasの画像のダウンロード方法
 // const canvas = document.getElementById('imgArea');
 // const a = document.getElementById('a')
 // const ctx2 = canvas.getContext('2d');
@@ -118,9 +118,12 @@
 // ctx2.fillStyle = "blue";
 // ctx2.fillRect(10, 20, 100, 100);
 
-// //blobにはcanvasで作成したオブジェクトが入ってくるので定義の必要なし。※イベントオブジェクトのようなもの
+
+
+////blobにはcanvasで作成したオブジェクトが入ってくるので定義の必要なし。※イベントオブジェクトのようなもの
 // canvas.toBlob((blob) => {
 //     a.href = window.URL.createObjectURL(blob);
+
 // })
 
 //Blobの文字をbase64に変換する方法
@@ -135,7 +138,7 @@
 // }
 
 // reader.readAsDataURL(blob)
-
+//base64のデータは,より右側のデータを使用しないとエラーが起こるため取り除く
 // const result = window.atob(b64.replace(/^.*,/, ''));
 
 // console.log(result);
@@ -144,7 +147,8 @@
 //ファイル保存などをクロスブラウザ対応で実装するには大変なので解決策としてFileSaver.jsを使用する
 // FileSaver.jsは、Blob形式のデータをクロスブラウザの実装を行うことができるライブラリ
 
-console.log(navigator.userAgent);
+
+
 
 
 

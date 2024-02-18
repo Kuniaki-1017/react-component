@@ -85,9 +85,20 @@
     </footer><!-- /.footer -->
 
 
-
-
+    <script src="./FileSaver.min.js" defer></script>
     <script src="./main.js" defer></script>
+    <script defer>
+        const canvas2 = document.getElementById('imgArea');
+        const ctx3 = canvas2.getContext('2d');
+
+        ctx3.fillStyle = "blue";
+        ctx3.fillRect(10, 20, 100, 100);
+
+        const fileName = "test.jpg";
+        canvas2.toBlob((blob) => {
+            saveAs(blob, fileName);
+        }, 'image/jpeg');</script>
+
 </body>
 
 </html>
