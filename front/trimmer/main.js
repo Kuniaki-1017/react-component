@@ -1,4 +1,128 @@
 
+//=====設定(加工前)=====//
+const x = 20;//選択画像の描画開始位置X
+const y = 20;//選択画像の描画開始位置Y
+
+
+//=====トリミング用の変数定義=====//
+const sX = 0;//トリミング開始の始点X
+const sY = 0;//トリミング開始の始点Y
+const sWidth = 200;//トリミングの幅
+const sHeight = 200;//トリミングの高さ
+const dX = 200;//トリミング加工したデータの描画開始始点X
+const dY = 200;//トリミング加工したデータの描画開始始点Y
+const dWdidth = 200;//トリミング加工したデータの描画サイズ幅
+const dHeight = 200;//トリミング加工したデータの描画サイズ高さ
+
+
+//=====トリムマーク用の変数定義=====//
+const cx = x + sX;//断裁位置X
+const cy = y + sY;//断裁位置Y
+const tr = 20;//トリムマークの長さ
+
+
+//=====cavas要素の初期設定=====//
+// canvas要素を取得、cvsに代入
+const cvs = document.getElementById('canvas');
+//canvasのサイズを設定※これを設定しないと画像描画が変になる
+cvs.width = 1000;
+cvs.height = 1000;
+//canvasのコンテキスト生成
+const ctx = cvs.getContext('2d');
+
+
+//=====ダウンロード用の変数=====//
+const fileName = "test.jpg";
+const download = document.getElementById('download')
+
+
+//=====トリムマーク描画の関数定義=====//
+function trim(ctx, cx, cy, tr, sWidth, sHeight, width, color) {
+    ctx.beginPath();
+    ctx.lineWidth = width;
+    ctx.strokeStyle = color;
+
+    //左上
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx, cy - tr);
+    ctx.lineTo(cx, cx - tr);
+    //右上
+    ctx.moveTo(cx + sWidth, cy);
+    ctx.lineTo(cx + sWidth, cy - tr);
+    ctx.lineTo(cx + sWidth + tr, cy);
+    //左下
+    ctx.moveTo(cx, cy + sHeight);
+    ctx.lineTo(cx, cy + sHeight + tr);
+    ctx.lineTo(cx - tr, cy + sHeight);
+    //右下
+    ctx.moveTo(cx + sWidth, cy + sHeight);
+    ctx.lineTo(cx + sWidth, cy + sHeight + tr);
+    ctx.lineTo(cx + sWidth + tr, cy + sHeight);
+    ctx.stroke();
+}
+
+
+
+//=====メイン：ファイル選択、トリミング、ダウンロード処理=====//
+//ファイルを選択用の取得
+const imgFile = document.getElementById('file');
+//ファイルを選択からファイルが選択された時の処理//
+imgFile.addEventListener('change', (e) => {
+
+    //キャンバスの中身をクリア
+    ctx.clearRect(0, 0, cvs.width, cvs.height);
+    // 選択されたファイルのMIMEがimegeか判定
+    if (e.target.files[0].type.match('image.*')) {
+        // 選択されたファイルをimgDataに格納
+        const imgData = e.target.files[0];
+        console.log(imgData)
+
+        //FileReaderオブジェクトをインスタンス化
+        const reader = new FileReader();
+        //ファイル読込を実行
+        reader.readAsDataURL(imgData);
+        reader.onload = () => {
+            //imgオブジェクトをインスタンス化：後ほど画像を出力する時に使用
+            const img = new Image();
+            //選択した画像をインスタンス化したimgのsrcに代入
+            //srcに代入する前にimgDataをURLのメソッドでURLに変換
+            img.src = reader.result;
+            img.onload = () => {
+                const imgW = img.width;
+                const imgH = img.height;
+                console.log(imgW, imgH)
+                ctx.drawImage(img, x, y, imgW, imgH);
+            }
+        }
+        //トリムマーク
+        trim(ctx, cx, cy, tr, sWidth, sHeight, 1, "red");
+
+
+        //ダウンロード処理
+        download.addEventListener('click', () => {
+            cvs.toBlob((blob) => {
+                saveAs(blob, fileName);
+            }, 'image/jpeg');
+        })
+
+    } else {
+        alert('img画像を選択してください')
+    }
+});
+
+
+// ファイル保存などをクロスブラウザ対応で実装するには大変なので解決策としてFileSaver.jsを使用する
+// 特にIEだとaタグのdownload属性がない
+// FileSaver.jsは、Blob形式のデータをクロスブラウザの実装を行うことができるライブラリ
+
+
+
+
+
+
+///////////////////////
+//以下、調査情報
+///////////////////////
 //=====機能=====//
 
 //①選択した画像をTrim Beforeに表示✅
@@ -186,66 +310,4 @@
 //         680   // dHeight (Canvasの描画サイズ：高さ)
 //     )
 // }
-
-
-//=====トリムマーク用の関数定義=====//
-//L字マーク生成関数
-// function addTrim(ctx, style, width, x1, y1, x2, y2) {
-//     ctx.beginPath();
-//     ctx.strokeStyle = style;
-//     ctx.lineWidth = width;
-//     ctx.moveTo(x1, y1);
-//     ctx.lineTo(x2, y2);
-//     ctx.lineTo(y1, x1);
-//     ctx.moveTo(50, 20);
-//     ctx.lineTo(50, 40);
-//     ctx.stroke();
-
-// }
-// addTrim(ctx, 'blue', 2, 40, 10, 40, 40);
-
-
-const imgFile = document.getElementById('file');
-
-
-//=====ファイルを選択からファイルが選択された時の処理=====//
-imgFile.addEventListener('change', (e) => {
-    // canvas要素を取得、cvsに代入
-    const cvs = document.getElementById('canvas');
-    //canvasのサイズを設定※これを設定しないと画像描画が変になる
-    cvs.width = 1000;
-    cvs.height = 1000;
-    //canvasのコンテキスト生成
-    const ctx = cvs.getContext('2d');
-    //キャンバスの中身をクリア
-    ctx.clearRect(0, 0, cvs.width, cvs.height);
-    // 選択されたファイルのMIMEがimegeか判定
-    if (e.target.files[0].type.match('image.*')) {
-        // 選択されたファイルをimgDataに格納
-        const imgData = e.target.files[0];
-        console.log(imgData)
-
-        //FileReaderオブジェクトをインスタンス化
-        const reader = new FileReader();
-        //ファイル読込を実行
-        reader.readAsDataURL(imgData);
-        reader.onload = () => {
-            //imgオブジェクトをインスタンス化：後ほど画像を出力する時に使用
-            const img = new Image();
-            //選択した画像をインスタンス化したimgのsrcに代入
-            //srcに代入する前にimgDataをURLのメソッドでURLに変換
-            img.src = reader.result;
-            img.onload = () => {
-                const imgW = img.width;
-                const imgH = img.height;
-                console.log(imgW, imgH)
-                ctx.drawImage(img, 0, 0, imgW, imgH);
-            }
-        }
-
-    } else {
-        alert('img画像を選択してください')
-    }
-});
-
 
