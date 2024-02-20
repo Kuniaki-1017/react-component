@@ -8,26 +8,22 @@
 
 
 //=====設定(加工前)=====//
-const x = 20;//===余白X：選択画像の描画開始位置X===//
-const y = 20;//===余白Y：選択画像の描画開始位置Y===//
+const x = 0;//===余白X：選択画像の描画開始位置X===//
+const y = 0;//===余白Y：選択画像の描画開始位置Y===//
+
+
+
 
 
 //=====トリミング用の変数定義=====//
-const sX = 10;//トリミング開始の始点X
-const sY = 10;//トリミング開始の始点Y
-const sWidth = 600;//===トリミングの幅===//
-const sHeight = 400;//===トリミングの高さ===//
+const sX = 50;//トリミング開始の始点X
+const sY = 50;//トリミング開始の始点Y
+const sWidth = 300;//===トリミングの幅===//
+const sHeight = 200;//===トリミングの高さ===//
 const dX = x;//トリミング加工したデータの描画開始始点X=>未加工の画像表示位置と合わせる
 const dY = y;//トリミング加工したデータの描画開始始点Y>未加工の画像表示位置と合わせる
 const dWdidth = sWidth;//トリミング加工したデータの描画サイズ幅=>トリミングの幅と合わせる
 const dHeight = sHeight;//トリミング加工したデータの描画サイズ高さ=>トリミングの高さと合わせる
-
-
-//=====トリムマーク用の変数定義=====//
-const cx = x + sX;//断裁位置X
-const cy = y + sY;//断裁位置Y
-const tr = 50;//===トリムマークの長さ===//
-
 
 
 
@@ -37,50 +33,54 @@ const tr = 50;//===トリムマークの長さ===//
 const cvsMark = document.getElementById('canvas-mark');
 const cvsTrim = document.getElementById('canvas-triming');
 //canvasのサイズを設定※これを設定しないと画像描画が変になる
-cvsMark.width = 1000;
-cvsMark.height = 500;
-cvsTrim.width = cvsMark.width;
-cvsTrim.height = cvsMark.height;
+// cvsMark.width = 1000;
+// cvsMark.height = 500;
+// cvsTrim.width = cvsMark.width;
+// cvsTrim.height = cvsMark.height;
 //canvasのコンテキスト生成
 const ctxMark = cvsMark.getContext('2d');
 const ctxTrim = cvsTrim.getContext('2d');
 
 
 //=====トリムマーク描画の関数定義=====//
-//第一引数にコンテキスト化したキャンバス要素、第二引数(オプション：デフォは1)に線の幅、第三引数オプション（デフォは#000）に色を指定
-function trim(ctx, lineW = 1, lineC = "#000") {
+//第一引数にコンテキスト化したキャンバス要素、第二引数(オプション：デフォは30)にトリムマークの長さ、第三引数(オプション：デフォは1)に線の幅、第四引数オプション（デフォは#000）に色を指定
+function trim(ctx, tr = 30, lineW = 2, lineC = "#000") {
     ctx.beginPath();//処理開始
     ctx.lineWidth = lineW;//線の幅
     ctx.strokeStyle = lineC;//線の色
-    // const adjust = (lineW / 2)
+    //=====トリムマーク用の変数定義=====//
+    const cx = x + sX;//断裁位置X
+    const cy = y + sY;//断裁位置Y
+    const adjust = (lineW / 2)
 
     //マーク設定：liinToは直前に指定した座標から現在の座標まで線を引くため縦と横それぞれ始点を指定する
     //左上
     console.log(cx, cy)
-    ctx.moveTo(cx, cy);//始点30,30
-    ctx.lineTo(cx - tr, cy);//横線
-    ctx.moveTo(cx, cy);//始点30,30
-    ctx.lineTo(cx, cy - tr);//縦線
+    ctx.moveTo(cx - adjust, cy - adjust);//始点
+    ctx.lineTo(cx - adjust - tr, cy - adjust);//横線
+    ctx.moveTo(cx - adjust, cy - adjust);//始点
+    ctx.lineTo(cx - adjust, cy - adjust - tr);//縦線
     //右上
-    ctx.moveTo(cx + sWidth, cy);//始点
-    ctx.lineTo(cx + sWidth, cy - tr);//横線
-    ctx.moveTo(cx + sWidth, cy);//始点
-    ctx.lineTo(cx + sWidth + tr, cy);
+    ctx.moveTo(cx + adjust + sWidth, cy - adjust);//始点
+    ctx.lineTo(cx + adjust + sWidth, cy - adjust - tr);//横線
+    ctx.moveTo(cx + adjust + sWidth, cy - adjust);//始点
+    ctx.lineTo(cx + adjust + sWidth + tr, cy - adjust);
     //左下
-    ctx.moveTo(cx, cy + sHeight);//始点
-    ctx.lineTo(cx, cy + sHeight + tr);
-    ctx.moveTo(cx, cy + sHeight);//始点
-    ctx.lineTo(cx - tr, cy + sHeight);
+    ctx.moveTo(cx - adjust, cy + adjust + sHeight);//始点
+    ctx.lineTo(cx - adjust, cy + adjust + sHeight + tr);
+    ctx.moveTo(cx - adjust, cy + adjust + sHeight);//始点
+    ctx.lineTo(cx - adjust - tr, cy + adjust + sHeight);
     //右下
-    ctx.moveTo(cx + sWidth, cy + sHeight);//始点
-    ctx.lineTo(cx + sWidth, cy + sHeight + tr);
-    ctx.moveTo(cx + sWidth, cy + sHeight);//始点
-    ctx.lineTo(cx + sWidth + tr, cy + sHeight);
+    ctx.moveTo(cx + adjust + sWidth, cy + adjust + sHeight);//始点
+    ctx.lineTo(cx + adjust + sWidth, cy + adjust + sHeight + tr);
+    ctx.moveTo(cx + adjust + sWidth, cy + adjust + sHeight);//始点
+    ctx.lineTo(cx + adjust + sWidth + tr, cy + adjust + sHeight);
 
     ctx.stroke();
 }
 
-
+//=====ファイルの名前用変数=====//
+const fileName = document.getElementById('file-name');
 
 //=====メイン：ファイル選択、トリミング、ダウンロード処理=====//
 //ファイルを選択用の取得
@@ -95,7 +95,9 @@ imgFile.addEventListener('change', (e) => {
     if (e.target.files[0].type.match('image.*')) {
         // 選択されたファイルをimgDataに格納
         const imgData = e.target.files[0];
-        console.log(imgData)
+        //選択されたファイルの名前を表示
+        fileName.textContent = `ファイル名：${imgData.name}`;
+
 
         //FileReaderオブジェクトをインスタンス化
         const reader = new FileReader();
@@ -111,13 +113,18 @@ imgFile.addEventListener('change', (e) => {
             img.onload = () => {
                 const imgW = img.width;
                 const imgH = img.height;
+                //canvasのサイズを読み込んだ画像サイズと同じにする
+                cvsMark.width = imgW;
+                cvsMark.height = imgH;
+                cvsTrim.width = cvsMark.width;
+                cvsTrim.height = cvsMark.height;
 
                 //画像描画
                 ctxMark.drawImage(img, x, y, imgW, imgH);
 
                 //=====トリムマーク処理=====//
                 //.onloadの中でトリムマーク関数を使用しないとうまく表示されない（画像の読み込みが終わっていないためデータがうまく取れない）
-                //第一引数にコンテキスト化したキャンバス要素、第二引数(オプション：デフォは1)に線の幅、第三引数オプション（デフォは#000）に色を指定
+                //第一引数にコンテキスト化したキャンバス要素、第二引数(オプション：デフォは30)にトリムマークの長さ、第三引数(オプション：デフォは1)に線の幅、第四引数オプション（デフォは#000）に色を指定
                 trim(ctxMark);
 
 

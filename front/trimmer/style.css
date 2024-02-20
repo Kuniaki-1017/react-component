@@ -169,18 +169,99 @@ body {
   display: flex;
   flex-direction: column;
 }
-.trim__canvas {
-  border: 1px dotted #999;
+.trim__wrap {
   margin-top: calc(2.6666666667 * var(--vw));
 }
 @media only screen and (min-width: 1200px) {
-  .trim__canvas {
+  .trim__wrap {
     margin-top: 32px;
   }
 }
 @media only screen and (max-width: 767px) {
-  .trim__canvas {
+  .trim__wrap {
     margin-top: calc(4.2666666667 * var(--vw));
+  }
+}
+.trim__canvas {
+  width: 100%;
+  border: 1px dotted #999;
+}
+.trim__file-wrap {
+  display: flex;
+  align-items: center;
+  gap: calc(0.8333333333 * var(--vw));
+}
+@media only screen and (min-width: 1200px) {
+  .trim__file-wrap {
+    gap: 10px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .trim__file-wrap {
+    flex-direction: column;
+    align-items: center;
+    margin-top: calc(5.3333333333 * var(--vw));
+    gap: calc(1.3333333333 * var(--vw));
+  }
+}
+.trim__input--file {
+  display: none;
+}
+.trim__setting-label {
+  margin-top: calc(1.6666666667 * var(--vw));
+  display: flex;
+  align-items: center;
+  gap: calc(0.8333333333 * var(--vw));
+}
+@media only screen and (min-width: 1200px) {
+  .trim__setting-label {
+    margin-top: 20px;
+    gap: 10px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .trim__setting-label {
+    flex-direction: column;
+    align-items: center;
+    margin-top: calc(2.6666666667 * var(--vw));
+    gap: calc(1.3333333333 * var(--vw));
+  }
+}
+.trim__setting-ttl {
+  text-align: right;
+  font-weight: bold;
+  width: 28%;
+}
+@media only screen and (max-width: 767px) {
+  .trim__setting-ttl {
+    width: 100%;
+    text-align: center;
+  }
+}
+.trim__setting-desc {
+  display: flex;
+  align-items: center;
+  gap: calc(0.4166666667 * var(--vw));
+}
+@media only screen and (max-width: 767px) {
+  .trim__setting-desc {
+    width: 100%;
+    justify-content: center;
+  }
+}
+.trim__setting-input {
+  width: 70%;
+  display: block;
+  padding: calc(0.8333333333 * var(--vw)) calc(1.25 * var(--vw));
+}
+@media only screen and (min-width: 1200px) {
+  .trim__setting-input {
+    padding: 10px 15px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .trim__setting-input {
+    padding: calc(1.3333333333 * var(--vw)) calc(2 * var(--vw));
   }
 }
 .trim__btn-wrap {

@@ -21,17 +21,49 @@
                 <div class="trim__inner">
                     <h2 class="trim__ttl">Trim Generator</h2><!-- /.trim__ttl -->
                     <div class="trim__contents">
-                        <label class="trim__label">
-                            <input id="file" class="trim__input trim__input--file" type="file">
-                        </label><!-- /.trim__label -->
-                        <label class="trim__label">
-                            <input id="" class="trim__input trim__input--trim-mark" type="number">
-                        </label><!-- /.trim__label -->
-                        <label class="trim__label">
-                            <input id="file" class="trim__input trim__input--file" type="number">
-                        </label><!-- /.trim__label -->
-                        <canvas class="trim__canvas" id="canvas-mark"></canvas><!-- /.trim__canvas -->
-                        <canvas class="trim__canvas" id="canvas-triming"></canvas><!-- /.trim__canvas -->
+                        <div class="trim__file-wrap">
+                            <label class="trim__label trim__btn">
+                                ファイルを選択
+                                <input id="file" class=" trim__input trim__input--file" type="file">
+                            </label><!-- /.trim__label -->
+                            <span id="file-name" class="trim__file-name"></span><!-- /.trim__file-name -->
+                        </div><!-- /.trim__file-wrap -->
+
+                        <!-- <dl class="trim__setting">
+                            <label for="" class="trim__setting-label">
+                                <dt class="trim__setting-ttl">トリミング開始位置X(横) :</dt>
+                                <dd class="trim__setting-desc"><input id="sX" type="number" class="trim__setting-input"
+                                        value="50"><span>px</span>
+                                </dd>
+                            </label>
+                            <label for="" class="trim__setting-label">
+                                <dt class="trim__setting-ttl">トリミング開始位置Y(縦) :</dt>
+                                <dd class="trim__setting-desc"><input id="sY" type="number" class="trim__setting-input"
+                                        value="50"><span>px</span>
+                                </dd>
+                            </label>
+                            <label for="" class="trim__setting-label">
+                                <dt class="trim__setting-ttl">トリミング幅 :</dt>
+                                <dd class="trim__setting-desc"><input id="sWidth" type="number"
+                                        class="trim__setting-input" value="300"><span>px</span>
+                                </dd>
+                            </label>
+                            <label for="" class="trim__setting-label">
+                                <dt class="trim__setting-ttl">トリミング高 :</dt>
+                                <dd class="trim__setting-desc"><input id="sHeight" type="number"
+                                        class="trim__setting-input" value="200"><span>px</span>
+                                </dd>
+                            </label>
+                        </dl>
+                        <button id="completion" class="trim__btn trim__completion">設定完了</button> -->
+                        <div class="trim__wrap">
+                            <h3 class="trim__ttl--s">Trim Mark</h3><!-- /.trim__ttl--s -->
+                            <canvas class="trim__canvas" id="canvas-mark"></canvas><!-- /.trim__canvas -->
+                        </div><!-- /.trim__wrap -->
+                        <div class="trim__wrap">
+                            <h3 class="trim__ttl--s">Triming Image</h3><!-- /.trim__ttl--s -->
+                            <canvas class="trim__canvas" id="canvas-triming"></canvas><!-- /.trim__canvas -->
+                        </div>
                         <div class="trim__btn-wrap">
                             <button id="mark" class="trim__btn trim__btn--mark">ダウンロード<br
                                     class="pc">（マーク付）</button><!-- /.trim__btn -->
