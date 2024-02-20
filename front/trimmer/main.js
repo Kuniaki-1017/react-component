@@ -1,63 +1,82 @@
+// 月曜日残存タスク
+// ・トリミング処理
+// ・トリムマーク実装
+
+
+
+
+
 
 //=====設定(加工前)=====//
-const x = 20;//選択画像の描画開始位置X
-const y = 20;//選択画像の描画開始位置Y
+const x = 20;//===余白X：選択画像の描画開始位置X===//
+const y = 20;//===余白Y：選択画像の描画開始位置Y===//
 
 
 //=====トリミング用の変数定義=====//
-const sX = 0;//トリミング開始の始点X
-const sY = 0;//トリミング開始の始点Y
-const sWidth = 200;//トリミングの幅
-const sHeight = 200;//トリミングの高さ
-const dX = 200;//トリミング加工したデータの描画開始始点X
-const dY = 200;//トリミング加工したデータの描画開始始点Y
-const dWdidth = 200;//トリミング加工したデータの描画サイズ幅
-const dHeight = 200;//トリミング加工したデータの描画サイズ高さ
+const sX = 10;//トリミング開始の始点X
+const sY = 10;//トリミング開始の始点Y
+const sWidth = 600;//===トリミングの幅===//
+const sHeight = 400;//===トリミングの高さ===//
+const dX = x;//トリミング加工したデータの描画開始始点X=>未加工の画像表示位置と合わせる
+const dY = y;//トリミング加工したデータの描画開始始点Y>未加工の画像表示位置と合わせる
+const dWdidth = sWidth;//トリミング加工したデータの描画サイズ幅=>トリミングの幅と合わせる
+const dHeight = sHeight;//トリミング加工したデータの描画サイズ高さ=>トリミングの高さと合わせる
 
 
 //=====トリムマーク用の変数定義=====//
 const cx = x + sX;//断裁位置X
 const cy = y + sY;//断裁位置Y
-const tr = 20;//トリムマークの長さ
+const tr = 50;//===トリムマークの長さ===//
+
+
+
 
 
 //=====cavas要素の初期設定=====//
 // canvas要素を取得、cvsに代入
-const cvs = document.getElementById('canvas');
+const cvsMark = document.getElementById('canvas-mark');
+const cvsTrim = document.getElementById('canvas-triming');
 //canvasのサイズを設定※これを設定しないと画像描画が変になる
-cvs.width = 1000;
-cvs.height = 1000;
+cvsMark.width = 1000;
+cvsMark.height = 500;
+cvsTrim.width = cvsMark.width;
+cvsTrim.height = cvsMark.height;
 //canvasのコンテキスト生成
-const ctx = cvs.getContext('2d');
-
-
-//=====ダウンロード用の変数=====//
-const fileName = "test.jpg";
-const download = document.getElementById('download')
+const ctxMark = cvsMark.getContext('2d');
+const ctxTrim = cvsTrim.getContext('2d');
 
 
 //=====トリムマーク描画の関数定義=====//
-function trim(ctx, cx, cy, tr, sWidth, sHeight, width, color) {
-    ctx.beginPath();
-    ctx.lineWidth = width;
-    ctx.strokeStyle = color;
+//第一引数にコンテキスト化したキャンバス要素、第二引数(オプション：デフォは1)に線の幅、第三引数オプション（デフォは#000）に色を指定
+function trim(ctx, lineW = 1, lineC = "#000") {
+    ctx.beginPath();//処理開始
+    ctx.lineWidth = lineW;//線の幅
+    ctx.strokeStyle = lineC;//線の色
+    // const adjust = (lineW / 2)
 
+    //マーク設定：liinToは直前に指定した座標から現在の座標まで線を引くため縦と横それぞれ始点を指定する
     //左上
-    ctx.moveTo(cx, cy);
-    ctx.lineTo(cx, cy - tr);
-    ctx.lineTo(cx, cx - tr);
+    console.log(cx, cy)
+    ctx.moveTo(cx, cy);//始点30,30
+    ctx.lineTo(cx - tr, cy);//横線
+    ctx.moveTo(cx, cy);//始点30,30
+    ctx.lineTo(cx, cy - tr);//縦線
     //右上
-    ctx.moveTo(cx + sWidth, cy);
-    ctx.lineTo(cx + sWidth, cy - tr);
+    ctx.moveTo(cx + sWidth, cy);//始点
+    ctx.lineTo(cx + sWidth, cy - tr);//横線
+    ctx.moveTo(cx + sWidth, cy);//始点
     ctx.lineTo(cx + sWidth + tr, cy);
     //左下
-    ctx.moveTo(cx, cy + sHeight);
+    ctx.moveTo(cx, cy + sHeight);//始点
     ctx.lineTo(cx, cy + sHeight + tr);
+    ctx.moveTo(cx, cy + sHeight);//始点
     ctx.lineTo(cx - tr, cy + sHeight);
     //右下
-    ctx.moveTo(cx + sWidth, cy + sHeight);
+    ctx.moveTo(cx + sWidth, cy + sHeight);//始点
     ctx.lineTo(cx + sWidth, cy + sHeight + tr);
+    ctx.moveTo(cx + sWidth, cy + sHeight);//始点
     ctx.lineTo(cx + sWidth + tr, cy + sHeight);
+
     ctx.stroke();
 }
 
@@ -70,7 +89,8 @@ const imgFile = document.getElementById('file');
 imgFile.addEventListener('change', (e) => {
 
     //キャンバスの中身をクリア
-    ctx.clearRect(0, 0, cvs.width, cvs.height);
+    ctxMark.clearRect(0, 0, cvsMark.width, cvsMark.height);
+    //画像表示の処理
     // 選択されたファイルのMIMEがimegeか判定
     if (e.target.files[0].type.match('image.*')) {
         // 選択されたファイルをimgDataに格納
@@ -87,21 +107,55 @@ imgFile.addEventListener('change', (e) => {
             //選択した画像をインスタンス化したimgのsrcに代入
             //srcに代入する前にimgDataをURLのメソッドでURLに変換
             img.src = reader.result;
+
             img.onload = () => {
                 const imgW = img.width;
                 const imgH = img.height;
-                console.log(imgW, imgH)
-                ctx.drawImage(img, x, y, imgW, imgH);
+
+                //画像描画
+                ctxMark.drawImage(img, x, y, imgW, imgH);
+
+                //=====トリムマーク処理=====//
+                //.onloadの中でトリムマーク関数を使用しないとうまく表示されない（画像の読み込みが終わっていないためデータがうまく取れない）
+                //第一引数にコンテキスト化したキャンバス要素、第二引数(オプション：デフォは1)に線の幅、第三引数オプション（デフォは#000）に色を指定
+                trim(ctxMark);
+
+
+                //=====トリミング関数=====//
+                //トリミング関数：hoge.drawImage(要素,sx,sy,sWidth,sHeight,dx,dy,dWidth,dHeight)
+                ctxTrim.drawImage(
+                    img,//トリミング対象オブジェクト
+                    sX,  // 元画像の切り抜き始点X
+                    sY, //元画像の切り抜き始点Y
+                    sWidth, // 元画像の切り抜きサイズ：横幅
+                    sHeight, //元画像の切り抜きサイズ：高さ
+                    dX,  //Canvasの描画開始位置X
+                    dY,  //Canvasの描画開始位置Y
+                    dWdidth,  //Canvasの描画サイズ：横幅
+                    dHeight   //Canvasの描画サイズ：高さ
+                )
             }
         }
-        //トリムマーク
-        trim(ctx, cx, cy, tr, sWidth, sHeight, 1, "red");
 
 
-        //ダウンロード処理
-        download.addEventListener('click', () => {
-            cvs.toBlob((blob) => {
-                saveAs(blob, fileName);
+
+
+        //ダウンロード（トリムマーク付き）処理
+        const downloadMark = document.getElementById('mark')
+        downloadMark.addEventListener('click', () => {
+            cvsMark.toBlob((blob) => {
+                //blobにはcvsのオブジェクトが入ってくる。イベントのeみたいな感じ
+                //読み込まれたファイルの名前でダウンロード
+                saveAs(blob, imgData.name);
+            }, 'image/jpeg');
+        })
+        //ダウンロード（トリミング）処理
+        const downloadTriming = document.getElementById('triming')
+        downloadTriming.addEventListener('click', () => {
+            cvsTrim.toBlob((blob) => {
+                //blobにはcvsのオブジェクトが入ってくる。イベントのeみたいな感じ
+                //読み込まれたファイルの名前でダウンロード
+                saveAs(blob, imgData.name);
             }, 'image/jpeg');
         })
 
@@ -286,28 +340,5 @@ imgFile.addEventListener('change', (e) => {
 
 
 
-//=====トリミング処理用の関数定義=====//
-//トリミング関数：hoge.drawImage(要素,sx,sy,sWidth,sHeight,dx,dy,dWidth,dHeight)
-//要素(トリミング用の要素)
-// sx      (元画像の切り抜き始点X)
-// sy      (元画像の切り抜き始点Y)
-// sWidth  (元画像の切り抜きサイズ：横幅)
-// sHeight (元画像の切り抜きサイズ：高さ)
-// dx      (Canvasの描画開始位置X)
-// dy      (Canvasの描画開始位置Y)
-// dWidth  (Canvasの描画サイズ：横幅)
-// dHeight (Canvasの描画サイズ：高さ)
-// trim = (el, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight) => {
-//     el.drawImage(
-//         chara,
-//         150,  // sx      (元画像の切り抜き始点X)
-//         130,  // sy      (元画像の切り抜き始点Y)
-//         130,  // sWidth  (元画像の切り抜きサイズ：横幅)
-//         180,  // sHeight (元画像の切り抜きサイズ：高さ)
-//         0,  // dx      (Canvasの描画開始位置X)
-//         0,  // dy      (Canvasの描画開始位置Y)
-//         480,  // dWidth  (Canvasの描画サイズ：横幅)
-//         680   // dHeight (Canvasの描画サイズ：高さ)
-//     )
-// }
+
 

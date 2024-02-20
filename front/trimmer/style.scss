@@ -104,6 +104,24 @@ body {
     padding: 0;
 }
 
+.pc {
+    display: block;
+
+    @include media(sp) {
+        display: none;
+    }
+
+}
+
+.sp {
+    display: none;
+
+    @include media(sp) {
+        display: block;
+    }
+
+}
+
 //=====スタイル=====//
 
 
@@ -213,8 +231,10 @@ body {
         flex-direction: column;
     }
 
+
     &__canvas {
-        border: 1px solid #999;
+
+        border: 1px dotted #999;
         margin-top: getvwPc(32);
 
         @include media(pc-l) {
@@ -222,16 +242,36 @@ body {
         }
 
         @include media(sp) {
+
             margin-top: getvw(32);
 
         }
     }
 
+    &__btn-wrap {
+        margin-top: getvwPc(40);
+        display: flex;
+        gap: getvwPc(40);
+
+        @include media(pc-l) {
+            margin-top: 40px;
+            gap: 40px;
+        }
+
+        @include media(sp) {
+            flex-direction: column;
+            align-items: center;
+            margin-top: getvw(40);
+            gap: getvw(40);
+
+        }
+    }
+
     &__btn {
-        margin-top: getvwPc(20);
+
         display: block;
-        width: getvwPc(180);
-        height: getvwPc(48);
+        width: getvwPc(200);
+        height: getvwPc(56);
         text-decoration: none;
         background-color: #1877F2;
         border: none;
@@ -248,17 +288,16 @@ body {
         }
 
         @include media(pc-l) {
-            margin-top: 20px;
-            height: 48px;
-            width: 180px;
+            height: 56px;
+            width: 200px;
             border-radius: 5px;
         }
 
         @include media(sp) {
+
             font-size: 1.2rem;
-            margin-top: getvw(15);
-            width: getvw(180);
-            height: getvw(48);
+            width: getvw(400);
+            height: getvw(56);
             border-radius: getvw(5);
 
         }

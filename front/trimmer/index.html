@@ -22,10 +22,22 @@
                     <h2 class="trim__ttl">Trim Generator</h2><!-- /.trim__ttl -->
                     <div class="trim__contents">
                         <label class="trim__label">
-                            <input id="file" class="trim__input trim__input--file"
-                                type="file"></label><!-- /.trim__label -->
-                        <canvas class="trim__canvas" id="canvas"></canvas><!-- /.trim__canvas -->
-                        <button id="download" class="trim__btn">ダウンロード</button><!-- /.trim__btn -->
+                            <input id="file" class="trim__input trim__input--file" type="file">
+                        </label><!-- /.trim__label -->
+                        <label class="trim__label">
+                            <input id="" class="trim__input trim__input--trim-mark" type="number">
+                        </label><!-- /.trim__label -->
+                        <label class="trim__label">
+                            <input id="file" class="trim__input trim__input--file" type="number">
+                        </label><!-- /.trim__label -->
+                        <canvas class="trim__canvas" id="canvas-mark"></canvas><!-- /.trim__canvas -->
+                        <canvas class="trim__canvas" id="canvas-triming"></canvas><!-- /.trim__canvas -->
+                        <div class="trim__btn-wrap">
+                            <button id="mark" class="trim__btn trim__btn--mark">ダウンロード<br
+                                    class="pc">（マーク付）</button><!-- /.trim__btn -->
+                            <button id="triming" class="trim__btn trim__btn--triming">ダウンロード<br
+                                    class="pc">（トリミング）</button><!-- /.trim__btn -->
+                        </div><!-- /.trim__btn-wrap -->
                     </div><!-- /.trim__contents -->
 
                 </div>
